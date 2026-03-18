@@ -5,6 +5,7 @@ import backgroundImage from "../assets/images/loginBackground.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "../components/Loading/Loading";
+import { backendUrl } from "../api/config/backend";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -64,7 +65,7 @@ const LoginPage: React.FC = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:8080/login", {
+      const response = await fetch(backendUrl("/login"), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -157,9 +158,11 @@ const LoginPage: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/password/forgotPassword?email=${encodeURIComponent(
+        backendUrl(
+          `/password/forgotPassword?email=${encodeURIComponent(
           resetEmail
-        )}`,
+          )}`
+        ),
         {
           method: "POST",
         }
