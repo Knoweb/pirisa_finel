@@ -17,9 +17,7 @@ RUN mvn clean package -DskipTests -e
 FROM tomcat:9-jdk11-corretto
 
 # Clear default web applications (manager, docs, host-manager, etc.) for security
-RUN rm -rf /usr/local/tomcat/webapps/* && \
-    chown -R tomcat:tomcat /usr/local/tomcat
-USER tomcat
+RUN rm -rf /usr/local/tomcat/webapps/*
 
 # Expose HTTP port
 EXPOSE 8080
@@ -28,6 +26,6 @@ EXPOSE 8080
 ENV JAVA_OPTS="-Xms512m -Xmx1024m -Djava.security.egd=file:/dev/./urandom"
 
 # Copy built artifact as ROOT application so it responds at /
-COPY --from=builder --chown=tomcat:tomcat /usr/src/app/target/HRM-1.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=builder /usr/src/app/target/HRM-1.war /usr/local/tomcat/webapps/ROOT.war
 
 CMD ["catalina.sh", "run"]
