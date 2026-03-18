@@ -138,7 +138,7 @@ export const EnhancedEventForm: React.FC<EnhancedEventFormProps> = ({
     try {
       setDepartmentsLoading(true);
       const response = await fetch(
-        `http://localhost:8080/calendar/departments/company/${companyId}`,
+        `/calendar/departments/company/${companyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -175,7 +175,7 @@ export const EnhancedEventForm: React.FC<EnhancedEventFormProps> = ({
     try {
       setSearchLoading(true);
       const response = await fetch(
-        `http://localhost:8080/api/employees/search?query=${encodeURIComponent(query)}&companyId=${companyId}`,
+        `/api/employees/search?query=${encodeURIComponent(query)}&companyId=${companyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

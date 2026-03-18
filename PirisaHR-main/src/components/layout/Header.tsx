@@ -160,7 +160,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:8080/employee/EmpDetailsListByEmp/${empId}`,
+        `/employee/EmpDetailsListByEmp/${empId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -211,7 +211,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:8080/employee/payroleListEmp/${empId}`,
+        `/employee/payroleListEmp/${empId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -255,7 +255,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
     try {
       const res = await fetch(
-        `http://localhost:8080/employee/PendingEmpDetailsList/${cmpnyId}`,
+        `/employee/PendingEmpDetailsList/${cmpnyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -403,7 +403,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
         if (role === "EMPLOYEE" && empId) {
           try {
             const existsResp = await fetch(
-              `http://localhost:8080/api/profile-image/exists/${empId}`,
+              `/api/profile-image/exists/${empId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -420,7 +420,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
               if (hasImage) {
                 const response = await fetch(
-                  `http://localhost:8080/api/profile-image/view/${empId}`,
+                  `/api/profile-image/view/${empId}`,
                   {
                     headers: {
                       Authorization: `Bearer ${token}`,
@@ -454,7 +454,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
         if (cmpId) {
           const logoResponse = await fetch(
-            `http://localhost:8080/logo/view/${cmpId}`,
+            `/logo/view/${cmpId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,

@@ -70,7 +70,7 @@ const EmployeeTable = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/employee/EmpDetailsList/${companyId}`,
+        `/employee/EmpDetailsList/${companyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -164,7 +164,7 @@ const EmployeeTable = () => {
       try {
         // First check if employee has a profile image
         const existsResponse = await fetch(
-          `http://localhost:8080/api/profile-image/exists/${employee.id}`,
+          `/api/profile-image/exists/${employee.id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -182,7 +182,7 @@ const EmployeeTable = () => {
           if (hasImage) {
             // If image exists, fetch it
             const photoResponse = await fetch(
-              `http://localhost:8080/api/profile-image/view/${employee.id}`,
+              `/api/profile-image/view/${employee.id}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -242,7 +242,7 @@ const EmployeeTable = () => {
                 }
 
                 const response = await fetch(
-                  `http://localhost:8080/employee/${id}`,
+                  `/employee/${id}`,
                   {
                     method: "DELETE",
                     headers: {
@@ -434,7 +434,7 @@ const EmployeeTable = () => {
                 }
 
                 const response = await fetch(
-                  `http://localhost:8080/employee/EmpDetailsList/${companyId}`,
+                  `/employee/EmpDetailsList/${companyId}`,
                   {
                     headers: {
                       Authorization: `Bearer ${token}`,

@@ -74,7 +74,7 @@ const EmployeeProfile = () => {
     try {
       // Fetch employee details including leave history
       const employeeResponse = await fetch(
-        `http://localhost:8080/employee/EmpDetailsListByEmp/${empId}`,
+        `/employee/EmpDetailsListByEmp/${empId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -110,7 +110,7 @@ const EmployeeProfile = () => {
       // Fetch leave balances from backend (supports Balance As-of Date modes)
       try {
         const leaveBalanceResponse = await fetch(
-          `http://localhost:8080/leave_balance/employee/${empId}?asOfMode=${asOfMode}`,
+          `/leave_balance/employee/${empId}?asOfMode=${asOfMode}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -150,7 +150,7 @@ const EmployeeProfile = () => {
 
       // Fetch employee photo
       const existsResponse = await fetch(
-        `http://localhost:8080/api/profile-image/exists/${empId}`,
+        `/api/profile-image/exists/${empId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -165,7 +165,7 @@ const EmployeeProfile = () => {
         );
         if (hasImage) {
           const imgResponse = await fetch(
-            `http://localhost:8080/api/profile-image/view/${empId}`,
+            `/api/profile-image/view/${empId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -203,8 +203,8 @@ const EmployeeProfile = () => {
       try {
         // Use profile image API for photo, document API for others
         const url = docType === "photo" 
-          ? `http://localhost:8080/api/profile-image/exists/${empId}`
-          : `http://localhost:8080/document/view/emp/${empId}/${docType}`;
+          ? `/api/profile-image/exists/${empId}`
+          : `/document/view/emp/${empId}/${docType}`;
           
         const response = await fetch(url, {
           headers: {
@@ -242,8 +242,8 @@ const EmployeeProfile = () => {
 
       // Use profile image API for photo, document API for others
       const url = documentType === "photo" 
-        ? `http://localhost:8080/api/profile-image/view/${empId}`
-        : `http://localhost:8080/document/view/emp/${empId}/${documentType}`;
+        ? `/api/profile-image/view/${empId}`
+        : `/document/view/emp/${empId}/${documentType}`;
         
       const response = await fetch(url, {
         headers: {

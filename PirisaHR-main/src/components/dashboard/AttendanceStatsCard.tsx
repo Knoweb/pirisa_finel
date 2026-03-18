@@ -32,7 +32,7 @@ const AttendanceStatsCard = () => {
     (async () => {
       try {
         const res = await fetch(
-          `http://localhost:8080/employee/lastattendanceList/${cmpnyId}`,
+          `/employee/lastattendanceList/${cmpnyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

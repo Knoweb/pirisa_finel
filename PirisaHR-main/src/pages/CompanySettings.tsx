@@ -55,7 +55,7 @@ const CompanySettings = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:8080/company/companyDetails/${cmpId}`,
+          `/company/companyDetails/${cmpId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -85,7 +85,7 @@ const CompanySettings = () => {
 
         // Fetch existing logo
         const logoResponse = await fetch(
-          `http://localhost:8080/logo/view/${cmpId}`,
+          `/logo/view/${cmpId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -142,7 +142,7 @@ const CompanySettings = () => {
     try {
       // Update company details
       const response = await fetch(
-        `http://localhost:8080/company/${cmpId}`,
+        `/company/${cmpId}`,
         {
           method: "PUT",
           headers: {
@@ -164,7 +164,7 @@ const CompanySettings = () => {
         logoFormData.append("logo", logoFile);
 
         const logoResponse = await fetch(
-          "http://localhost:8080/logo/upload",
+          "/logo/upload",
           {
             method: "POST",
             headers: {

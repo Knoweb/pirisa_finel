@@ -66,7 +66,7 @@ const Unit = () => {
       setLoading(true);
       const cmpId = getCompanyId();
       const response = await axios.get<ApiResponse>(
-        `http://localhost:8080/department/company/${cmpId}`,
+        `/department/company/${cmpId}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -111,7 +111,7 @@ const Unit = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:8080/department/add_department",
+        "/department/add_department",
         payload,
         {
           headers: {
@@ -150,7 +150,7 @@ const Unit = () => {
       };
 
       const response = await axios.put(
-        "http://localhost:8080/department/update_department",
+        "/department/update_department",
         payload,
         {
           headers: {
@@ -179,7 +179,7 @@ const Unit = () => {
   const deleteUnit = async (id: number) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/department/${id}`,
+        `/department/${id}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -206,7 +206,7 @@ const Unit = () => {
   }) => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/designation/add_designation",
+        "/designation/add_designation",
         designationData,
         {
           headers: {
@@ -231,7 +231,7 @@ const Unit = () => {
   const deleteDesignation = async (id: number) => {
     try {
       const response = await axios.delete(
-        `http://localhost:8080/designation/${id}`,
+        `/designation/${id}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -383,7 +383,7 @@ const Unit = () => {
     try {
       const cmpId = getCompanyId();
       const response = await axios.get<ApiResponse>(
-        `http://localhost:8080/department/search/${cmpId}?query=${encodeURIComponent(query)}`,
+        `/department/search/${cmpId}?query=${encodeURIComponent(query)}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,

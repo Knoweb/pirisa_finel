@@ -68,7 +68,7 @@ const PayslipModal: React.FC<PayslipModalProps> = ({
 
       // Fetch payslip details
       const payslipRes = await fetch(
-        `http://localhost:8080/employee/payroleListEmp/${employeeId}`,
+        `/employee/payroleListEmp/${employeeId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -99,7 +99,7 @@ const PayslipModal: React.FC<PayslipModalProps> = ({
 
       // Fetch company details
       const companyRes = await fetch(
-        `http://localhost:8080/company/companyDetails/${companyId}`,
+        `/company/companyDetails/${companyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -117,7 +117,7 @@ const PayslipModal: React.FC<PayslipModalProps> = ({
 
       // Fetch employee details
       const employeeRes = await fetch(
-        `http://localhost:8080/employee/emp/${employeeId}`,
+        `/employee/emp/${employeeId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -142,7 +142,7 @@ const PayslipModal: React.FC<PayslipModalProps> = ({
 
       // Fetch company logo
       const logoRes = await fetch(
-        `http://localhost:8080/logo/view/${companyId}`,
+        `/logo/view/${companyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

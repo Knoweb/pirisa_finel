@@ -210,7 +210,7 @@ const SalaryForm: React.FC = () => {
 
         // Fetch employee details
         const employeeResponse = await fetch(
-          `http://localhost:8080/employee/EmpDetailsList/${companyId}`,
+          `/employee/EmpDetailsList/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -263,7 +263,7 @@ const SalaryForm: React.FC = () => {
         }
 
         const response = await fetch(
-          `http://localhost:8080/allowance/company/${companyId}`,
+          `/allowance/company/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -302,7 +302,7 @@ const SalaryForm: React.FC = () => {
         }
 
         const response = await fetch(
-          `http://localhost:8080/bonus/company/${companyId}`,
+          `/bonus/company/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -339,7 +339,7 @@ const SalaryForm: React.FC = () => {
         if (!token || !companyId) return;
 
         const response = await fetch(
-          `http://localhost:8080/companyOT/${companyId}`,
+          `/companyOT/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -372,7 +372,7 @@ const SalaryForm: React.FC = () => {
         if (!token || !companyId || !selectedEmployeeForOvertime) return;
 
         const response = await fetch(
-          `http://localhost:8080/employee/attendanceList/${companyId}`,
+          `/employee/attendanceList/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -494,7 +494,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        "http://localhost:8080/allowance/add_allowance",
+        "/allowance/add_allowance",
         {
           method: "POST",
           headers: {
@@ -538,7 +538,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        "http://localhost:8080/bonus/add_bonus",
+        "/bonus/add_bonus",
         {
           method: "POST",
           headers: {
@@ -579,7 +579,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/regular?amount=${amount}`,
+        `/apit/regular?amount=${amount}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -616,7 +616,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/nonresident/regular?amount=${amount}`,
+        `/apit/nonresident/regular?amount=${amount}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -660,7 +660,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&monthlyTax=${monthlyTax}&prevLumpTax=${prevLumpTax}`,
+        `/apit/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&monthlyTax=${monthlyTax}&prevLumpTax=${prevLumpTax}`,
         {
           method: "GET",
           headers: {
@@ -708,7 +708,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/nonresident/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&monthlyTax=${monthlyTax}&prevLumpTax=${prevLumpTax}`,
+        `/apit/nonresident/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&monthlyTax=${monthlyTax}&prevLumpTax=${prevLumpTax}`,
         {
           method: "GET",
           headers: {
@@ -754,7 +754,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/cumulative?cumulativeIncome=${cumulativeIncome}&prevTax=${prevTax}`,
+        `/apit/cumulative?cumulativeIncome=${cumulativeIncome}&prevTax=${prevTax}`,
         {
           method: "GET",
           headers: {
@@ -798,7 +798,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/tax-on-tax/monthly?amount=${amount}`,
+        `/apit/tax-on-tax/monthly?amount=${amount}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -842,7 +842,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/tax-on-tax/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&taxOnTaxMonthly=${taxOnTaxMonthly}&prevLumpTaxOnTax=${prevLumpTaxOnTax}`,
+        `/apit/tax-on-tax/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&taxOnTaxMonthly=${taxOnTaxMonthly}&prevLumpTaxOnTax=${prevLumpTaxOnTax}`,
         {
           method: "GET",
           headers: {
@@ -885,7 +885,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/secondary/resident?primary=${primary}&secondary=${secondary}`,
+        `/apit/secondary/resident?primary=${primary}&secondary=${secondary}`,
         {
           method: "GET",
           headers: {
@@ -927,7 +927,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/secondary/nonresident?primary=${primary}&secondary=${secondary}`,
+        `/apit/secondary/nonresident?primary=${primary}&secondary=${secondary}`,
         {
           method: "GET",
           headers: {
@@ -973,7 +973,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/apit/foreign?cumulativeIncome=${cumulativeIncome}&prevTax=${prevTax}`,
+        `/apit/foreign?cumulativeIncome=${cumulativeIncome}&prevTax=${prevTax}`,
         {
           method: "GET",
           headers: {
@@ -1086,7 +1086,7 @@ const SalaryForm: React.FC = () => {
       //console.log("Request Body:", requestBody); // Log to verify values
 
       const response = await fetch(
-        "http://localhost:8080/payrole/add_payrole",
+        "/payrole/add_payrole",
         {
           method: "POST",
           headers: {

@@ -73,7 +73,7 @@ const PayroleList = () => {
 
       try {
         const response = await fetch(
-          `http://localhost:8080/employee/payroleListEmp/${empId}`,
+          `/employee/payroleListEmp/${empId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

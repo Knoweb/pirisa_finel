@@ -88,7 +88,7 @@ const AttendanceMarkTable = () => {
         }
 
         const response = await fetch(
-          `http://localhost:8080/employee/lastattendanceList/${companyId}`,
+          `/employee/lastattendanceList/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -143,7 +143,7 @@ const AttendanceMarkTable = () => {
         }
 
         const response = await fetch(
-          "http://localhost:8080/emp_leave/employees-on-leave-today",
+          "/emp_leave/employees-on-leave-today",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -209,7 +209,7 @@ const AttendanceMarkTable = () => {
       employeeList.map(async (employee) => {
         try {
           const existsResp = await fetch(
-            `http://localhost:8080/api/profile-image/exists/${employee.id}`,
+            `/api/profile-image/exists/${employee.id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -226,7 +226,7 @@ const AttendanceMarkTable = () => {
           if (!hasImage) return;
 
           const imgResp = await fetch(
-            `http://localhost:8080/api/profile-image/view/${employee.id}`,
+            `/api/profile-image/view/${employee.id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -291,7 +291,7 @@ const AttendanceMarkTable = () => {
                 };
 
                 const response = await fetch(
-                  "http://localhost:8080/attendance/add_attendance",
+                  "/attendance/add_attendance",
                   {
                     method: "POST",
                     headers: {
@@ -360,7 +360,7 @@ const AttendanceMarkTable = () => {
                 };
 
                 const response = await fetch(
-                  `http://localhost:8080/attendance/update/${attendanceId}`,
+                  `/attendance/update/${attendanceId}`,
                   {
                     method: "PUT",
                     headers: {
@@ -466,7 +466,7 @@ const AttendanceMarkTable = () => {
                 };
 
                 const response = await fetch(
-                  "http://localhost:8080/emp_leave/cancel-leave-and-mark-attendance",
+                  "/emp_leave/cancel-leave-and-mark-attendance",
                   {
                     method: "POST",
                     headers: {
@@ -532,7 +532,7 @@ const AttendanceMarkTable = () => {
       }
 
       const response = await fetch(
-        `http://localhost:8080/employee/lastattendanceList/${companyId}`,
+        `/employee/lastattendanceList/${companyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -583,7 +583,7 @@ const AttendanceMarkTable = () => {
       const token = localStorage.getItem("token");
       if (token) {
         const response = await fetch(
-          "http://localhost:8080/emp_leave/employees-on-leave-today",
+          "/emp_leave/employees-on-leave-today",
           {
             headers: {
               Authorization: `Bearer ${token}`,

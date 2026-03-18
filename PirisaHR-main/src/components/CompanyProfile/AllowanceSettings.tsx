@@ -52,7 +52,7 @@ const AllowanceSettings: React.FC = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:8080/allowance/company/${cmpId}`,
+        `/allowance/company/${cmpId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -132,7 +132,7 @@ const AllowanceSettings: React.FC = () => {
       console.log("Update Payload:", payload); // Debug log
 
       const response = await axios.put(
-        "http://localhost:8080/allowance/update_allowance",
+        "/allowance/update_allowance",
         payload,
         {
           headers: {
@@ -193,7 +193,7 @@ const AllowanceSettings: React.FC = () => {
 
       try {
         const response = await axios.post(
-          "http://localhost:8080/allowance/add_allowance",
+          "/allowance/add_allowance",
           payload,
           {
             headers: {
@@ -239,7 +239,7 @@ const AllowanceSettings: React.FC = () => {
       try {
         console.log("Deleting allowance with ID:", id);
         const response = await axios.delete(
-          `http://localhost:8080/allowance/${id}`,
+          `/allowance/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

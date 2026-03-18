@@ -91,7 +91,7 @@ const PayroleReport: React.FC = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/employee/payroleList/${cmpId}`,
+        `/employee/payroleList/${cmpId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

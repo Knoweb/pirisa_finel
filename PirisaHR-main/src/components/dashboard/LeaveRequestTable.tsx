@@ -73,7 +73,7 @@ const LeaveRequestTable = () => {
 
     try {
       const res = await fetch(
-        `http://localhost:8080/employee/EmpDetailsList/${cmpnyId}`,
+        `/employee/EmpDetailsList/${cmpnyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -142,7 +142,7 @@ const LeaveRequestTable = () => {
         empIds.map(async (empId) => {
           try {
             const existsResp = await fetch(
-              `http://localhost:8080/api/profile-image/exists/${empId}`,
+              `/api/profile-image/exists/${empId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -159,7 +159,7 @@ const LeaveRequestTable = () => {
             if (!hasImage) return { empId, url: null as string | null };
 
             const imgResp = await fetch(
-              `http://localhost:8080/api/profile-image/view/${empId}`,
+              `/api/profile-image/view/${empId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,

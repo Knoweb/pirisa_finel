@@ -45,7 +45,7 @@ function EmployeeLeaveRequest() {
 
       try {
         const response = await fetch(
-          `http://localhost:8080/company_leave/company/${cmpId}`,
+          `/company_leave/company/${cmpId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -138,7 +138,7 @@ function EmployeeLeaveRequest() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/emp_leave/add_leave",
+        "/emp_leave/add_leave",
         {
           method: "POST",
           headers: {
