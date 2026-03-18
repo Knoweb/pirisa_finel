@@ -1,0 +1,13 @@
+.compact-table th,
+.compact-table td {
+  padding: 1rem 0.5rem; /* Further reduce padding */
+  font-size: 0.875rem; /* Smaller font size */
+}
+
+.compact-table th {
+  font-weight: 500; /* Slightly lighter header font */
+}
+
+.compact-table .text-xs {
+  font-size: 0.75rem; /* Smaller text for content */
+}
