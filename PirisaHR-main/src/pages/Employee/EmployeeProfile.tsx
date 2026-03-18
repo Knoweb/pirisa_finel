@@ -121,7 +121,13 @@ const EmployeeProfile = () => {
         if (leaveBalanceResponse.ok) {
           const data = await leaveBalanceResponse.json();
           if (data?.resultCode === 100 && Array.isArray(data?.planBalances)) {
-            const balances: LeaveBalance[] = data.planBalances.map((b: any) => ({
+            const balances: LeaveBalance[] = data.planBalances.map((b: { 
+              leaveType: string; 
+              available: number; 
+              taken: number; 
+              remaining: number; 
+              calculatedOn?: string; 
+            }) => ({
               leaveType: b.leaveType,
               available: b.available,
               taken: b.taken,

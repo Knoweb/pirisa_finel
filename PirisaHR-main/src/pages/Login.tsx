@@ -184,7 +184,7 @@ const LoginPage: React.FC = () => {
           autoClose: 8000,
         });
       }
-    } catch (error) {
+    } catch {
       toast.error("An error occurred. Please try again.", {
         position: "top-center",
       });
