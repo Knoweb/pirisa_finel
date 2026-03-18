@@ -1,0 +1,81 @@
+version: '3.8'
+
+# Define custom networks for security
+networks:
+  frontend_net:
+    driver: bridge
+  backend_net:
+    driver: bridge
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: pirisa_db
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD:-Ijse@123}
+      MYSQL_DATABASE: HRM
+    # Exposing the database port (remove this in strict production if no external access is needed)
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - backend_net
+    restart: always
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 5
+      start_period: 30s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  backend:
+    build:
+      context: ./HRM-main
+      # You can specify Dockerfile if it's named differently, otherwise default is used
+    container_name: pirisa_backend
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/HRM?allowPublicKeyRetrieval=true&useSSL=false
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD:-Ijse@123}
+      - APP_DOMAIN=${APP_DOMAIN:-http://localhost:8080}
+    ports:
+      - "8080:8080"
+    networks:
+      - backend_net
+      - frontend_net
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+  frontend:
+    build:
+      context: ./PirisaHR-main
+    container_name: pirisa_frontend
+    ports:
+      - "80:8080"
+    networks:
+      - frontend_net
+    depends_on:
+      - backend
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  # Persistent volume for MySQL
+  db_data:
+    driver: local

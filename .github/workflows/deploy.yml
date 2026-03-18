@@ -1,0 +1,100 @@
+name: Production CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  backend-test:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+          distribution: 'corretto'
+          cache: maven
+      - name: Run Maven Tests
+        run: |
+          cd HRM-main
+          mvn test
+
+  frontend-test:
+    name: Frontend Lint & Build Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 'PirisaHR-main/package-lock.json'
+      - name: Install dependencies
+        run: |
+          cd PirisaHR-main
+          npm ci
+      - name: Run ESLint
+        run: |
+          cd PirisaHR-main
+          npm run lint
+      - name: Test Build
+        run: |
+          cd PirisaHR-main
+          npm run build
+
+  deploy:
+    name: Deploy to Production
+    needs: [backend-test, frontend-test]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Deployment Directory
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          script: |
+            mkdir -p /opt/pirisa-finel
+
+      - name: Secure Copy to Droplet
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          source: "."
+          target: "/opt/pirisa-finel"
+          rm: true
+          # Exclude non-essential files to improve transfer speed and security
+          exclude: ".git,node_modules,target,dist,*.md,.idea,.idx,PirisaHR-main/node_modules,HRM-main/target,.env"
+
+      - name: Build and Restart Docker Containers
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USERNAME }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          script: |
+            cd /opt/pirisa-finel
+            
+            # Generate .env file using secure secrets
+            echo "DB_PASSWORD=${{ secrets.PRODUCTION_DB_PASSWORD }}" > .env
+            echo "APP_DOMAIN=${{ secrets.PRODUCTION_APP_DOMAIN }}" >> .env
+            
+            # Prune old images to save disk space
+            docker system prune -f
+            
+            # Bring down existing containers
+            docker compose down --remove-orphans || true
+            
+            # Start containers with healthchecks and detach
+            docker compose up -d --build
