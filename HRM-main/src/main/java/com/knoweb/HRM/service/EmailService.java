@@ -127,7 +127,7 @@ public class EmailService {
         
         // Personal message
         content.append("<div style='margin: 20px 0;'>");
-        content.append("<p style='color: #666;'>Dear ").append(employee.getFirstName()).append(" ").append(employee.getLastName()).append(",</p>");
+        content.append("<p style='color: #666;'>Dear ").append(employee.getFirst_name()).append(" ").append(employee.getLast_name()).append(",</p>");
         content.append("<p style='color: #666;'>You have been invited to this calendar event. Please mark your calendar and attend accordingly.</p>");
         content.append("</div>");
         
