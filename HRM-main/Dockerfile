@@ -16,17 +16,7 @@ RUN mvn clean package -DskipTests -e
 # Use an optimized Tomcat image based on Corretto
 FROM tomcat:9-jdk11-corretto
 
-# Prevent running tomcat with root privileges (industry standard for container security)
-# Create a non-root user and group
-RUN groupadd -r tomcat && useradd -m -g tomcat tomcat
-
-# Switch to the non-root user
-USER tomcat
-
 # Clear default web applications (manager, docs, host-manager, etc.) for security
-# Because we are non-root, this folder usually has root ownership, so we either 
-# clear it as root before switching, or change ownership.
-USER root
 RUN rm -rf /usr/local/tomcat/webapps/* && \
     chown -R tomcat:tomcat /usr/local/tomcat
 USER tomcat
