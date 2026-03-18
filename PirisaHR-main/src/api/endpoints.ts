@@ -2,7 +2,7 @@ export const ENDPOINTS = {
     AUTH: {
       LOGIN: '/login',
       FORGOT_PASSWORD: '/password/forgotPassword',
-      REGISTER: '/api/company/register',
+      REGISTER: '/company/register',
     },
     COMPANY: {
       GET_ALL: '/company/all',
