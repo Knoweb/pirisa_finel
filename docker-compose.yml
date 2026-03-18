@@ -63,7 +63,7 @@ services:
       context: ./PirisaHR-main
     container_name: pirisa_frontend
     ports:
-      - "80:8080"
+      - "80:80"
     networks:
       - frontend_net
     depends_on:
