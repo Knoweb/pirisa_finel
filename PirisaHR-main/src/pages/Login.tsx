@@ -21,6 +21,29 @@ const LoginPage: React.FC = () => {
   // Check for SSO token on component mount
   useEffect(() => {
     const checkSSOToken = () => {
+      // 1. First check URL parameters (for incoming SSO from main dashboard)
+      const params = new URLSearchParams(window.location.search);
+      const urlToken = params.get('token');
+      const urlEmail = params.get('email');
+      const urlCompanyName = params.get('companyName') || params.get('username') || 'Valued Company';
+      const urlOrgId = params.get('orgId');
+
+      if (urlToken && urlEmail) {
+        console.log("SSO - Incoming token from URL:", urlEmail);
+        
+        // Set up session data
+        localStorage.setItem("token", urlToken); // Use the actual token from main dashboard
+        localStorage.setItem("role", "CMPNY");
+        localStorage.setItem("username", urlEmail);
+        localStorage.setItem("companyName", urlCompanyName);
+        if (urlOrgId) localStorage.setItem("cmpnyId", urlOrgId);
+
+        toast.success(`Welcome ${urlCompanyName}! Logged in via KNOWEB`);
+        navigate("/dashboard");
+        return;
+      }
+
+      // 2. Fallback to existing knoweb_sso_token in localStorage
       const ssoTokenStr = localStorage.getItem('knoweb_sso_token');
       
       if (ssoTokenStr) {
@@ -32,9 +55,8 @@ const LoginPage: React.FC = () => {
           const fiveMinutes = 5 * 60 * 1000;
           
           if (tokenAge < fiveMinutes && ssoToken.source === 'knoweb') {
-            // Valid SSO token - set up session data for company user
-            // Using dummy token since we're bypassing normal login
-            localStorage.setItem("token", "sso_token_" + Date.now());
+            // Valid SSO token
+            localStorage.setItem("token", ssoToken.token || ("sso_token_" + Date.now()));
             localStorage.setItem("role", "CMPNY");
             localStorage.setItem("username", ssoToken.email);
             localStorage.setItem("companyName", ssoToken.companyName);
@@ -46,7 +68,6 @@ const LoginPage: React.FC = () => {
             navigate("/dashboard");
             return;
           } else {
-            // Token expired or invalid
             localStorage.removeItem('knoweb_sso_token');
           }
         } catch (error) {

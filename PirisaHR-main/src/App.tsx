@@ -2,6 +2,7 @@ import "./App.css";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import Login from "./pages/Login";
 import RegisterPage from "./pages/RegisterPage";
+import Logout from "./pages/Logout";
 import { MainLayout } from "./components/layout/MainLayout";
 import AllEmployee from "./pages/EmployeeManagement/AllEmployeePage";
 // import NewEmployee from "./pages/Employee/NewEmployeePage";
@@ -39,6 +40,7 @@ function App() {
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/auth/logout" element={<Logout />} />
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<MainLayout />}>
                 <Route index element={<Navigate to="/dashboard" replace />} />
