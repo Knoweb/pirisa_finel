@@ -503,8 +503,10 @@ const DashboardCalendar: React.FC = () => {
         const data = await response.json();
         console.log('Departments response data:', data);
         
-        if (data.DepartmentList || data.UnitList || data.departments) {
-          const rawDepartments = data.DepartmentList || data.UnitList || data.departments || [];
+        // Look for any of the possible response keys
+        const rawDepartments = data.DepartmentList || data.UnitList || data.departments;
+        
+        if (rawDepartments && Array.isArray(rawDepartments)) {
           // Normalize department objects to match our interface
           const mappedDepartments = rawDepartments.map((d: RawDepartment) => ({
             id: d.id,

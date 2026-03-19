@@ -241,7 +241,7 @@ const AttendanceTable = () => {
       );
 
       const leaveResponse = await fetch(
-          `/employee/EmpDetailsList/${companyId}`,
+          `/api/employee/EmpDetailsList/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

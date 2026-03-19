@@ -28,8 +28,8 @@ const DepartmentStats = () => {
 
     (async () => {
       try {
-        const res = await fetch(
-          `/employee/EmpDetailsList/${cmpnyId}`,
+        const response = await fetch(
+          `/api/employee/EmpDetailsList/${cmpnyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

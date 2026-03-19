@@ -74,7 +74,7 @@ const EmployeeProfile = () => {
     try {
       // Fetch employee details including leave history
       const employeeResponse = await fetch(
-        `/employee/EmpDetailsListByEmp/${empId}`,
+        `/api/employee/EmpDetailsListByEmp/${empId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

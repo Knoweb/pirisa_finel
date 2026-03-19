@@ -160,7 +160,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
     try {
       const res = await fetch(
-        `/employee/EmpDetailsListByEmp/${empId}`,
+        `/api/employee/EmpDetailsListByEmp/${empId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -211,7 +211,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
     try {
       const res = await fetch(
-        `/employee/payroleListEmp/${empId}`,
+        `/api/employee/payroleListEmp/${empId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -255,7 +255,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
     try {
       const res = await fetch(
-        `/employee/PendingEmpDetailsList/${cmpnyId}`,
+        `/api/employee/PendingEmpDetailsList/${cmpnyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

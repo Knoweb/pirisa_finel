@@ -50,7 +50,7 @@ const LeaveSettings: React.FC = () => {
 
     try {
       const response = await fetch(
-          `/company_leave/company/${cmpId}`,
+          `/api/company_leave/company/${cmpId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -116,7 +116,7 @@ const LeaveSettings: React.FC = () => {
     setSavingEdit(true);
     try {
       const response = await fetch(
-          `/company_leave/update_leave`,
+          `/api/company_leave/update_leave`,
           {
             method: "PUT",
             headers: {
@@ -189,7 +189,7 @@ const LeaveSettings: React.FC = () => {
     setSavingNew(true);
     try {
       const response = await fetch(
-          `/company_leave/add_leave`,
+          `/api/company_leave/add_leave`,
           {
             method: "POST",
             headers: {
@@ -249,7 +249,7 @@ const LeaveSettings: React.FC = () => {
 
     try {
       const response = await fetch(
-          `/company_leave/${id}`,
+          `/api/company_leave/${id}`,
           {
             method: "DELETE",
             headers: {

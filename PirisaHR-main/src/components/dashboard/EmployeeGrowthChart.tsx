@@ -38,7 +38,7 @@ const EmployeeGrowthChart = () => {
     (async () => {
       try {
         const res = await fetch(
-          `/employee/EmpDetailsList/${cmpnyId}`,
+          `/api/employee/EmpDetailsList/${cmpnyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

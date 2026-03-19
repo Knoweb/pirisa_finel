@@ -210,7 +210,7 @@ const SalaryForm: React.FC = () => {
 
         // Fetch employee details
         const employeeResponse = await fetch(
-          `/employee/EmpDetailsList/${companyId}`,
+          `/api/employee/EmpDetailsList/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -263,7 +263,7 @@ const SalaryForm: React.FC = () => {
         }
 
         const response = await fetch(
-          `/allowance/company/${companyId}`,
+          `/api/allowance/company/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -302,7 +302,7 @@ const SalaryForm: React.FC = () => {
         }
 
         const response = await fetch(
-          `/bonus/company/${companyId}`,
+          `/api/bonus/company/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -339,7 +339,7 @@ const SalaryForm: React.FC = () => {
         if (!token || !companyId) return;
 
         const response = await fetch(
-          `/companyOT/${companyId}`,
+          `/api/companyOT/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -372,7 +372,7 @@ const SalaryForm: React.FC = () => {
         if (!token || !companyId || !selectedEmployeeForOvertime) return;
 
         const response = await fetch(
-          `/employee/attendanceList/${companyId}`,
+          `/api/employee/attendanceList/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -494,7 +494,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        "/allowance/add_allowance",
+        "/api/allowance/add_allowance",
         {
           method: "POST",
           headers: {
@@ -538,7 +538,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        "/bonus/add_bonus",
+        "/api/bonus/add_bonus",
         {
           method: "POST",
           headers: {
@@ -579,7 +579,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/regular?amount=${amount}`,
+        `/api/apit/regular?amount=${amount}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -616,7 +616,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/nonresident/regular?amount=${amount}`,
+        `/api/apit/nonresident/regular?amount=${amount}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -660,7 +660,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&monthlyTax=${monthlyTax}&prevLumpTax=${prevLumpTax}`,
+        `/api/apit/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&monthlyTax=${monthlyTax}&prevLumpTax=${prevLumpTax}`,
         {
           method: "GET",
           headers: {
@@ -708,7 +708,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/nonresident/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&monthlyTax=${monthlyTax}&prevLumpTax=${prevLumpTax}`,
+        `/api/apit/nonresident/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&monthlyTax=${monthlyTax}&prevLumpTax=${prevLumpTax}`,
         {
           method: "GET",
           headers: {
@@ -754,7 +754,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/cumulative?cumulativeIncome=${cumulativeIncome}&prevTax=${prevTax}`,
+        `/api/apit/cumulative?cumulativeIncome=${cumulativeIncome}&prevTax=${prevTax}`,
         {
           method: "GET",
           headers: {
@@ -798,7 +798,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/tax-on-tax/monthly?amount=${amount}`,
+        `/api/apit/tax-on-tax/monthly?amount=${amount}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -842,7 +842,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/tax-on-tax/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&taxOnTaxMonthly=${taxOnTaxMonthly}&prevLumpTaxOnTax=${prevLumpTaxOnTax}`,
+        `/api/apit/tax-on-tax/lump-sum?paid=${paid}&payable=${payable}&lumpSum=${lumpSum}&taxOnTaxMonthly=${taxOnTaxMonthly}&prevLumpTaxOnTax=${prevLumpTaxOnTax}`,
         {
           method: "GET",
           headers: {
@@ -885,7 +885,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/secondary/resident?primary=${primary}&secondary=${secondary}`,
+        `/api/apit/secondary/resident?primary=${primary}&secondary=${secondary}`,
         {
           method: "GET",
           headers: {
@@ -927,7 +927,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/secondary/nonresident?primary=${primary}&secondary=${secondary}`,
+        `/api/apit/secondary/nonresident?primary=${primary}&secondary=${secondary}`,
         {
           method: "GET",
           headers: {
@@ -973,7 +973,7 @@ const SalaryForm: React.FC = () => {
       }
 
       const response = await fetch(
-        `/apit/foreign?cumulativeIncome=${cumulativeIncome}&prevTax=${prevTax}`,
+        `/api/apit/foreign?cumulativeIncome=${cumulativeIncome}&prevTax=${prevTax}`,
         {
           method: "GET",
           headers: {
@@ -1086,7 +1086,7 @@ const SalaryForm: React.FC = () => {
       //console.log("Request Body:", requestBody); // Log to verify values
 
       const response = await fetch(
-        "/payrole/add_payrole",
+        "/api/payrole/add_payrole",
         {
           method: "POST",
           headers: {

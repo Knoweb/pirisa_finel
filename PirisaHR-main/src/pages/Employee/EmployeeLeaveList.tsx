@@ -51,7 +51,7 @@ const EmployeeLeaveList = () => {
 
       try {
         const response = await fetch(
-          `/employee/EmpDetailsListByEmp/${empId}`,
+          `/api/employee/EmpDetailsListByEmp/${empId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
