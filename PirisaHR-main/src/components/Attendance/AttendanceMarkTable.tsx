@@ -88,7 +88,7 @@ const AttendanceMarkTable = () => {
         }
 
         const response = await fetch(
-          `/employee/lastattendanceList/${companyId}`,
+          `/api/employee/lastattendanceList/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -143,7 +143,7 @@ const AttendanceMarkTable = () => {
         }
 
         const response = await fetch(
-          "/emp_leave/employees-on-leave-today",
+          "/api/emp_leave/employees-on-leave-today",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -291,7 +291,7 @@ const AttendanceMarkTable = () => {
                 };
 
                 const response = await fetch(
-                  "/attendance/add_attendance",
+                  "/api/attendance/add_attendance",
                   {
                     method: "POST",
                     headers: {
@@ -360,7 +360,7 @@ const AttendanceMarkTable = () => {
                 };
 
                 const response = await fetch(
-                  `/attendance/update/${attendanceId}`,
+                  `/api/attendance/update/${attendanceId}`,
                   {
                     method: "PUT",
                     headers: {
@@ -466,7 +466,7 @@ const AttendanceMarkTable = () => {
                 };
 
                 const response = await fetch(
-                  "/emp_leave/cancel-leave-and-mark-attendance",
+                  "/api/emp_leave/cancel-leave-and-mark-attendance",
                   {
                     method: "POST",
                     headers: {
@@ -532,7 +532,7 @@ const AttendanceMarkTable = () => {
       }
 
       const response = await fetch(
-        `/employee/lastattendanceList/${companyId}`,
+        `/api/employee/lastattendanceList/${companyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -583,7 +583,7 @@ const AttendanceMarkTable = () => {
       const token = localStorage.getItem("token");
       if (token) {
         const response = await fetch(
-          "/emp_leave/employees-on-leave-today",
+          "/api/emp_leave/employees-on-leave-today",
           {
             headers: {
               Authorization: `Bearer ${token}`,

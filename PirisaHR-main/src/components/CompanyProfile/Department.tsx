@@ -66,7 +66,7 @@ const Unit = () => {
       setLoading(true);
       const cmpId = getCompanyId();
       const response = await axios.get<ApiResponse>(
-        `/department/company/${cmpId}`,
+        `/api/department/company/${cmpId}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -111,7 +111,7 @@ const Unit = () => {
       };
 
       const response = await axios.post(
-        "/department/add_department",
+        "/api/department/add_department",
         payload,
         {
           headers: {
@@ -150,7 +150,7 @@ const Unit = () => {
       };
 
       const response = await axios.put(
-        "/department/update_department",
+        "/api/department/update_department",
         payload,
         {
           headers: {
@@ -179,7 +179,7 @@ const Unit = () => {
   const deleteUnit = async (id: number) => {
     try {
       const response = await axios.delete(
-        `/department/${id}`,
+        `/api/department/${id}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -206,7 +206,7 @@ const Unit = () => {
   }) => {
     try {
       const response = await axios.post(
-        "/designation/add_designation",
+        "/api/designation/add_designation",
         designationData,
         {
           headers: {
@@ -231,7 +231,7 @@ const Unit = () => {
   const deleteDesignation = async (id: number) => {
     try {
       const response = await axios.delete(
-        `/designation/${id}`,
+        `/api/designation/${id}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -383,7 +383,7 @@ const Unit = () => {
     try {
       const cmpId = getCompanyId();
       const response = await axios.get<ApiResponse>(
-        `/department/search/${cmpId}?query=${encodeURIComponent(query)}`,
+        `/api/department/search/${cmpId}?query=${encodeURIComponent(query)}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,

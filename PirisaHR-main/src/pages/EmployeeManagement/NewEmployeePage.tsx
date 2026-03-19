@@ -112,7 +112,7 @@ const EmployeeRegistration: React.FC = () => {
 
     try {
       const response = await fetch(
-        `/department/company/${cmpId}`,
+        `/api/department/company/${cmpId}`,
         {
           method: "GET",
           headers: {
@@ -250,7 +250,7 @@ const EmployeeRegistration: React.FC = () => {
 
     try {
       const response = await fetch(
-        "/employee/add_employee",
+        "/api/employee/add_employee",
         {
           method: "POST",
           headers: {
@@ -386,7 +386,7 @@ const EmployeeRegistration: React.FC = () => {
       let documentResponse = null;
       if (hasOtherFiles) {
         documentResponse = await fetch(
-          "/document/upload-all",
+          "/api/document/upload-all",
           {
             method: "POST",
             headers: {
@@ -458,7 +458,7 @@ const EmployeeRegistration: React.FC = () => {
     formData.append("empId", currentEmpId.toString());
     try {
       const response = await fetch(
-        "/document/upload-all",
+        "/api/document/upload-all",
         {
           method: "POST",
           headers: {

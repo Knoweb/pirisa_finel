@@ -255,10 +255,10 @@ const MonthlyAttendanceCalendar = () => {
       }
 
       const [attendanceResponse, leaveResponse] = await Promise.all([
-        fetch(`/employee/attendanceList/${companyId}`, {
+        fetch(`/api/employee/attendanceList/${companyId}`, {
           headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }
         }),
-        fetch(`/employee/EmpDetailsList/${companyId}`, {
+        fetch(`/api/employee/EmpDetailsList/${companyId}`, {
           headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" }
         })
       ]);

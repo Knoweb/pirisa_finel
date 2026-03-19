@@ -79,7 +79,7 @@ const AttendanceCalendarDashboard: React.FC = () => {
 
       // Fetch employee data
       const employeeResponse = await fetch(
-        `/employee/emp/${empId}`,
+        `/api/employee/emp/${empId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -90,7 +90,7 @@ const AttendanceCalendarDashboard: React.FC = () => {
 
       // Fetch leave data
       const leaveResponse = await fetch(
-        `/employee/EmpDetailsListByEmp/${empId}`,
+        `/api/employee/EmpDetailsListByEmp/${empId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

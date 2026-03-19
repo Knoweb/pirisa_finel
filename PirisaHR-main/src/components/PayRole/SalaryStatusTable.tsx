@@ -138,13 +138,13 @@ const SalaryStatusTable = () => {
       }
 
       const [payrollResponse, detailsResponse] = await Promise.all([
-        fetch(`/employee/payroleList/${companyId}`, {
+        fetch(`/api/employee/payroleList/${companyId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         }),
-        fetch(`/employee/EmpDetailsList/${companyId}`, {
+        fetch(`/api/employee/EmpDetailsList/${companyId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",

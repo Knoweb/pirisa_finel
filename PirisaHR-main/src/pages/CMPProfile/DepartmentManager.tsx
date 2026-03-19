@@ -64,7 +64,7 @@ const UnitDesignationManager = () => {
       setLoading(true);
       const cmpId = getCompanyId();
       const response = await axios.get<ApiResponse>(
-        `/department/company/${cmpId}`,
+        `/api/department/company/${cmpId}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -106,7 +106,7 @@ const UnitDesignationManager = () => {
       };
 
       const response = await axios.post(
-        "/department/add_department",
+        "/api/department/add_department",
         payload,
         {
           headers: {
@@ -141,7 +141,7 @@ const UnitDesignationManager = () => {
       };
 
       const response = await axios.post(
-        "/department/update_department",
+        "/api/department/update_department",
         payload,
         {
           headers: {
@@ -166,7 +166,7 @@ const UnitDesignationManager = () => {
   const deleteUnit = async (id: number) => {
     try {
       const response = await axios.delete(
-        `/department/delete/${id}`,
+        `/api/department/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -193,7 +193,7 @@ const UnitDesignationManager = () => {
   }) => {
     try {
       const response = await axios.post(
-        "/designation/add_designation",
+        "/api/designation/add_designation",
         designationData,
         {
           headers: {
@@ -218,7 +218,7 @@ const UnitDesignationManager = () => {
   const deleteDesignation = async (id: number) => {
     try {
       const response = await axios.delete(
-        `/designation/delete/${id}`,
+        `/api/designation/delete/${id}`,
         {
           headers: {
             Authorization: `Bearer ${getToken()}`,

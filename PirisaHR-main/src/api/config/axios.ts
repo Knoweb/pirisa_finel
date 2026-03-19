@@ -3,9 +3,7 @@ import axios from "axios";
 import { BACKEND_ORIGIN } from "./backend";
 
 // Prefer explicit API base; otherwise derive from backend origin; otherwise same-origin /api
-const BASE_URL =
-  import.meta.env.VITE_API_BASE_URL ||
-  (BACKEND_ORIGIN ? `${BACKEND_ORIGIN}/api` : "/api");
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || BACKEND_ORIGIN;
 
 export const axiosInstance = axios.create({
   baseURL: BASE_URL,

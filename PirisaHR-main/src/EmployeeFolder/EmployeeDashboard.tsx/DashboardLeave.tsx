@@ -58,7 +58,7 @@ export const LeaveCards: React.FC = () => {
         let availableLeaves: CompanyLeave[] = [];
         try {
           const companyLeavesRes = await api.get(
-            `/company_leave/company/${companyId}`
+            `/api/company_leave/company/${companyId}`
           );
           if (companyLeavesRes.data.resultCode === 100) {
             availableLeaves = companyLeavesRes.data.LeavetList;
@@ -76,7 +76,7 @@ export const LeaveCards: React.FC = () => {
         let employeeLeaves: EmployeeLeave[] = [];
         try {
           const employeeLeavesRes = await api.get(
-            `/employee/EmpDetailsListByEmp/${empId}`
+            `/api/employee/EmpDetailsListByEmp/${empId}`
           );
           if (employeeLeavesRes.data.resultCode === 100) {
             employeeLeaves =

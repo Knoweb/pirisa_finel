@@ -351,7 +351,7 @@ const DashboardCalendar: React.FC = () => {
     try {
       setEmployeesLoading(true);
       const response = await fetch(
-          `/calendar/employees/company/${companyId}`,
+          `/api/employee/EmpDetailsList/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -362,8 +362,8 @@ const DashboardCalendar: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        if (data.resultCode === 100) {
-          setEmployees(data.employees || []);
+        if (data.EmployeeList && Array.isArray(data.EmployeeList)) {
+          setEmployees(data.EmployeeList);
         }
       }
     } catch (err) {
@@ -394,8 +394,8 @@ const DashboardCalendar: React.FC = () => {
 
       if (response.ok) {
         const data = await response.json();
-        if (data.resultCode === 100) {
-          const foundEmployees = data.employees || [];
+        if (data.EmployeeList && Array.isArray(data.EmployeeList)) {
+          const foundEmployees = data.EmployeeList;
           setSearchResults(foundEmployees);
           setShowSearchResults(true);
           
@@ -473,7 +473,7 @@ const DashboardCalendar: React.FC = () => {
       console.log(`Fetching departments for company ID: ${companyId}`);
       
       const response = await fetch(
-          `/calendar/departments/company/${companyId}`,
+          `/api/department/company/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -488,8 +488,17 @@ const DashboardCalendar: React.FC = () => {
         const data = await response.json();
         console.log('Departments response data:', data);
         
-        if (data.resultCode === 100) {
-          const departments = data.departments || [];
+        if (data.DepartmentList || data.UnitList || data.departments) {
+          const rawDepartments = data.DepartmentList || data.UnitList || data.departments || [];
+          // Normalize department objects to match our interface
+          const departments = rawDepartments.map((d: any) => ({
+            id: d.id,
+            dptName: d.dpt_name || d.dptName || d.unit_name || 'Unknown',
+            dptCode: d.dpt_code || d.dptCode || d.unit_code || '',
+            dptDesc: d.dpt_desc || d.dptDesc || d.unit_desc || '',
+            cmpId: d.cmpId || companyId,
+            designationList: d.designationList || []
+          }));
           console.log(`Found ${departments.length} departments:`, departments);
           setDepartments(departments);
         } else {
@@ -510,56 +519,28 @@ const DashboardCalendar: React.FC = () => {
   }, [companyId, token]);
 
   const fetchDesignations = useCallback(async (departmentId?: number): Promise<void> => {
-    if (!companyId || !token) return;
+    if (!departments.length) return;
 
+    setDesignationsLoading(true);
     try {
-      setDesignationsLoading(true);
-      let url = `/calendar/designations/company/${companyId}`;
       if (departmentId) {
-        url = `/calendar/designations/department/${departmentId}`;
-      }
-      
-      console.log(`Fetching designations from: ${url}`);
-
-      const response = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-      });
-
-      console.log(`Designations response status: ${response.status}`);
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Designations response data:', data);
-        
-        if (data.resultCode === 100) {
-          const designations = data.designations || [];
-          console.log(`Found ${designations.length} designations:`, designations);
-          setDesignations(designations);
-        } else {
-          console.error('Designations API error:', data.resultDesc);
-          setError(`Failed to fetch designations: ${data.resultDesc}`);
-        }
+        const dept = departments.find(d => d.id === departmentId);
+        setDesignations(dept?.designationList || []);
       } else {
-        const errorText = await response.text();
-        console.error('Designations HTTP error:', response.status, errorText);
-        setError(`Failed to fetch designations: HTTP ${response.status}`);
+        // Flatten all designations from all departments
+        const allDesignations = departments.flatMap(d => d.designationList || []);
+        setDesignations(allDesignations);
       }
-    } catch (err) {
-      console.error('Failed to fetch designations:', err);
-      setError('Failed to fetch designations. Please try again.');
     } finally {
       setDesignationsLoading(false);
     }
-  }, [companyId, token]);
+  }, [departments]);
 
   const updateEventStatusInBackend = async (eventId: number, newStatus: string): Promise<void> => {
     try {
       console.log(`Updating event ${eventId} status to ${newStatus}`);
       
-      const response = await fetch(`/calendar/events/${eventId}/status`, {
+      const response = await fetch(`/api/calendar/events/${eventId}/status`, {
         method: 'PUT',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -584,7 +565,7 @@ const DashboardCalendar: React.FC = () => {
 
   const testBackendConnectivity = async (): Promise<boolean> => {
     try {
-      const response = await fetch('/actuator/health', {
+      const response = await fetch('/api/actuator/health', {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
       });
@@ -781,7 +762,7 @@ const DashboardCalendar: React.FC = () => {
       };
 
       const response = await fetch(
-          "/calendar/events",
+          "/api/calendar/events",
           {
             method: "POST",
             headers: {
@@ -835,7 +816,7 @@ const DashboardCalendar: React.FC = () => {
 
     try {
       const response = await fetch(
-          `/calendar/events/${selectedEvent.id}`,
+          `/api/calendar/events/${selectedEvent.id}`,
           {
             method: "PUT",
             headers: {
@@ -893,7 +874,7 @@ const DashboardCalendar: React.FC = () => {
 
     try {
       const response = await fetch(
-          `/calendar/events/${eventId}`,
+          `/api/calendar/events/${eventId}`,
           {
             method: "DELETE",
             headers: {
@@ -1136,7 +1117,7 @@ const DashboardCalendar: React.FC = () => {
       if (userId && userId !== 'null') {
         try {
           const response = await fetch(
-              `/calendar/events/company/${companyId}/employee/${userId}/including-leaves`,
+              `/api/calendar/events/company/${companyId}/employee/${userId}/including-leaves`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -1160,7 +1141,7 @@ const DashboardCalendar: React.FC = () => {
       if (allEvents.length === 0) {
         try {
           const response = await fetch(
-              `/calendar/events/company/${companyId}/month/${year}/${month}`,
+              `/api/calendar/events/company/${companyId}/month/${year}/${month}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -1180,7 +1161,7 @@ const DashboardCalendar: React.FC = () => {
           
           // Final fallback - get all company events
           const response = await fetch(
-              `/calendar/events/company/${companyId}`,
+              `/api/calendar/events/company/${companyId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,

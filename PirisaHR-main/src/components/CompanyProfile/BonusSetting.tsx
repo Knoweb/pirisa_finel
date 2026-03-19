@@ -44,7 +44,7 @@ const BonusSettings: React.FC = () => {
 
     try {
       const response = await axios.get(
-        `/bonus/company/${cmpId}`,
+        `/api/bonus/company/${cmpId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -115,7 +115,7 @@ const BonusSettings: React.FC = () => {
       };
 
       const response = await axios.put(
-        `/bonus/update/${editingId}`,
+        `/api/bonus/update/${editingId}`,
         payload,
         {
           headers: {
@@ -168,7 +168,7 @@ const BonusSettings: React.FC = () => {
 
       try {
         const response = await axios.post(
-          "/bonus/add_bonus",
+          "/api/bonus/add_bonus",
           payload,
           {
             headers: {
@@ -210,7 +210,7 @@ const BonusSettings: React.FC = () => {
 
       try {
         const response = await axios.delete(
-          `/bonus/delete/${id}`,
+          `/api/bonus/delete/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,

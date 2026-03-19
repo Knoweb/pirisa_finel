@@ -117,7 +117,7 @@ const EmployeeUpdate: React.FC = () => {
   const fetchEmployeeDetails = async () => {
     try {
       const response = await fetch(
-        `/employee/emp/${id}`,
+        `/api/employee/emp/${id}`,
         {
           method: "GET",
           headers: {
@@ -188,7 +188,7 @@ const EmployeeUpdate: React.FC = () => {
 
     try {
       const response = await fetch(
-        `/department/company/${cmpId}`,
+        `/api/department/company/${cmpId}`,
         {
           method: "GET",
           headers: {
@@ -406,7 +406,7 @@ const EmployeeUpdate: React.FC = () => {
     }, 15000);
 
     try {
-      const response = await fetch(`/employee/${id}`, {
+      const response = await fetch(`/api/employee/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

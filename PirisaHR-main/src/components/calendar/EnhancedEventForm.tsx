@@ -138,19 +138,18 @@ export const EnhancedEventForm: React.FC<EnhancedEventFormProps> = ({
     try {
       setDepartmentsLoading(true);
       const response = await fetch(
-        `/calendar/departments/company/${companyId}`,
+        `/api/department/company/${companyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
           },
         }
       );
 
       if (response.ok) {
         const data = await response.json();
-        if (data.resultCode === 100) {
-          const departments = data.departments || [];
+        if (data.DepartmentList || data.UnitList || data.departments) {
+          const rawDeps = data.DepartmentList || data.UnitList || data.departments || [];
           // Add "All Departments" option
           const allDepartmentsOption = {
             id: -1,

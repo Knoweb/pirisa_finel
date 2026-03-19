@@ -70,7 +70,7 @@ const EmployeeTable = () => {
       }
 
       const response = await fetch(
-        `/employee/EmpDetailsList/${companyId}`,
+        `/api/employee/EmpDetailsList/${companyId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -242,7 +242,7 @@ const EmployeeTable = () => {
                 }
 
                 const response = await fetch(
-                  `/employee/${id}`,
+                  `/api/employee/${id}`,
                   {
                     method: "DELETE",
                     headers: {
@@ -434,7 +434,7 @@ const EmployeeTable = () => {
                 }
 
                 const response = await fetch(
-                  `/employee/EmpDetailsList/${companyId}`,
+                  `/api/employee/EmpDetailsList/${companyId}`,
                   {
                     headers: {
                       Authorization: `Bearer ${token}`,

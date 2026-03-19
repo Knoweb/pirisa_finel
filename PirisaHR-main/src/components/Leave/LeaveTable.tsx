@@ -57,14 +57,14 @@ const LeaveTable = () => {
       let endpoint = "";
       switch (status) {
         case "APPROVED":
-          endpoint = `/employee/ApprovedEmpDetailsList/${cmpId}`;
+          endpoint = `/api/employee/ApprovedEmpDetailsList/${cmpId}`;
           break;
         case "REJECTED":
-          endpoint = `/employee/RejectedEmpDetailsList/${cmpId}`;
+          endpoint = `/api/employee/RejectedEmpDetailsList/${cmpId}`;
           break;
         case "PENDING":
         default:
-          endpoint = `/employee/PendingEmpDetailsList/${cmpId}`;
+          endpoint = `/api/employee/PendingEmpDetailsList/${cmpId}`;
       }
 
       const response = await fetch(endpoint, {
@@ -142,7 +142,7 @@ const LeaveTable = () => {
       }
 
       const response = await fetch(
-        `/emp_leave/${leaveId}`,
+        `/api/emp_leave/${leaveId}`,
         {
           method: "PUT",
           headers: {

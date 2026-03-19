@@ -231,7 +231,7 @@ const AttendanceTable = () => {
       }
 
       const response = await fetch(
-          `/employee/attendanceList/${companyId}`,
+          `/api/employee/attendanceList/${companyId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -505,7 +505,7 @@ const AttendanceTable = () => {
       }
 
       const response = await fetch(
-          `/attendance/${id}`,
+          `/api/attendance/${id}`,
           {
             method: "DELETE",
             headers: {
@@ -692,7 +692,7 @@ const AttendanceTable = () => {
                     }
 
                     const response = await fetch(
-                        `/employee/attendanceList/${companyId}`,
+                        `/api/employee/attendanceList/${companyId}`,
                         {
                           headers: {
                             Authorization: `Bearer ${token}`,
