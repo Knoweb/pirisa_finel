@@ -158,7 +158,7 @@ export const EnhancedEventForm: React.FC<EnhancedEventFormProps> = ({
             dptDesc: "Select all departments",
             cmpId: parseInt(companyId),
           };
-          setDepartments([allDepartmentsOption, ...departments]);
+          setDepartments([allDepartmentsOption, ...rawDeps]);
         }
       }
     } catch (err) {
