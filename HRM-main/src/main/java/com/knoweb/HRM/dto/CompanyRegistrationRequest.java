@@ -30,7 +30,17 @@ public class CompanyRegistrationRequest {
     @Size(min = 6, max = 100, message = "Password must be between 6 and 100 characters")
     private String password;
 
+    private Long orgId;
+
     // Getters and Setters
+    public Long getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Long orgId) {
+        this.orgId = orgId;
+    }
+
     public String getCmpName() {
         return cmpName;
     }

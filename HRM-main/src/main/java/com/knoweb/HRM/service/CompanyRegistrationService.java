@@ -52,6 +52,9 @@ public class CompanyRegistrationService {
             company.setUsername(request.getUsername());
             company.setCmp_password(passwordEncoder.encode(request.getPassword()));
             company.setCompany_status("ACTIVE");
+            if (request.getOrgId() != null) {
+                company.setOrgId(request.getOrgId());
+            }
             
             System.out.println("DEBUG - Saving company with data:");
             System.out.println("  cmp_name: " + company.getCmp_name());

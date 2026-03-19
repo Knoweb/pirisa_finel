@@ -25,6 +25,9 @@ public class Company implements Serializable {
     @Column(name = "cmp_id")
     private long id;
 
+    @Column(unique = true, name = "org_id")
+    private Long orgId;
+
     private String cmp_name;
 
     private String cmp_address;
