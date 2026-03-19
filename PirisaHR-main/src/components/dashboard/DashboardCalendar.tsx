@@ -137,6 +137,21 @@ interface WebSocketMessage {
   status?: string;
 }
 
+interface RawDepartment {
+  id: number;
+  dpt_name?: string;
+  dptName?: string;
+  unit_name?: string;
+  dpt_code?: string;
+  dptCode?: string;
+  unit_code?: string;
+  dpt_desc?: string;
+  dptDesc?: string;
+  unit_desc?: string;
+  cmpId?: number | string;
+  designationList?: Designation[];
+}
+
 // ==================== Constants ====================
 
 const EVENT_TYPES = [
@@ -491,16 +506,17 @@ const DashboardCalendar: React.FC = () => {
         if (data.DepartmentList || data.UnitList || data.departments) {
           const rawDepartments = data.DepartmentList || data.UnitList || data.departments || [];
           // Normalize department objects to match our interface
-          const departments = rawDepartments.map((d: any) => ({
+          const mappedDepartments = rawDepartments.map((d: RawDepartment) => ({
             id: d.id,
             dptName: d.dpt_name || d.dptName || d.unit_name || 'Unknown',
             dptCode: d.dpt_code || d.dptCode || d.unit_code || '',
             dptDesc: d.dpt_desc || d.dptDesc || d.unit_desc || '',
-            cmpId: d.cmpId || companyId,
+            cmpId: d.cmpId || (companyId ? parseInt(companyId) : 0),
             designationList: d.designationList || []
           }));
-          console.log(`Found ${departments.length} departments:`, departments);
-          setDepartments(departments);
+          console.log(`Found ${mappedDepartments.length} departments:`, mappedDepartments);
+          const allDepartmentsOption: Department = { id: 0, dptName: 'All Departments', dptCode: 'ALL', dptDesc: 'All Departments', cmpId: companyId ? parseInt(companyId) : 0, designationList: [] };
+          setDepartments([allDepartmentsOption, ...mappedDepartments]);
         } else {
           console.error('Departments API error:', data.resultDesc);
           setError(`Failed to fetch departments: ${data.resultDesc}`);
