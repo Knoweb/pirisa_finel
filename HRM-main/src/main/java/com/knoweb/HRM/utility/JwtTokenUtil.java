@@ -48,7 +48,7 @@ public class JwtTokenUtil {
     private String createToken(Map<String, Object> claims, String subject) {
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(SignatureAlgorithm.HS256, secret).compact();
+                .signWith(SignatureAlgorithm.HS512, secret).compact();
     }
 
 //    public Boolean validateToken(String token, UserDetails userDetails) {
