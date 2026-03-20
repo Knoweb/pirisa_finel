@@ -142,10 +142,10 @@ const EmployeeUpdate: React.FC = () => {
             basic_salary: emp.basic_salary || 0,
             email: emp.email || "",
             gender: emp.gender || "",
-            DOB: (emp.DOB || emp.dob) ? String(emp.DOB || emp.dob).split("T")[0] : "",
+            dob: (emp.dob || emp.DOB) ? String(emp.dob || emp.DOB).split("T")[0] : "",
             phone: emp.phone || "",
             address: emp.address || "",
-            NIC: emp.NIC || emp.nic || "",
+            nic: emp.nic || emp.NIC || "",
             date_of_joining: emp.date_of_joining
               ? emp.date_of_joining.split("T")[0]
               : "",
@@ -345,7 +345,7 @@ const EmployeeUpdate: React.FC = () => {
       return;
     }
 
-    if (!isNonEmpty(employeeDetails.NIC)) {
+    if (!isNonEmpty(employeeDetails.nic)) {
       toast.error("NIC is required");
       setIsUpdating(false);
       return;
@@ -369,7 +369,7 @@ const EmployeeUpdate: React.FC = () => {
     let formattedDOB: string;
     let formattedJoiningDate: string;
     try {
-      formattedDOB = formatDateOrThrow(employeeDetails.DOB, "Date of Birth");
+      formattedDOB = formatDateOrThrow(employeeDetails.dob, "Date of Birth");
       formattedJoiningDate = formatDateOrThrow(
         employeeDetails.date_of_joining,
         "Date of Joining"
