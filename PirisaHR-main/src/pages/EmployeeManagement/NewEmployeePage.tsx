@@ -124,9 +124,10 @@ const EmployeeRegistration: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Departments API Response:", data);
-        if (data.DepartmentList && Array.isArray(data.DepartmentList)) {
-          console.log("Departments found:", data.DepartmentList);
-          setDepartments(data.DepartmentList);
+        const rawUnits = data.UnitList || data.DepartmentList;
+        if (rawUnits && Array.isArray(rawUnits)) {
+          console.log("Departments found:", rawUnits);
+          setDepartments(rawUnits);
         } else {
           console.error("API response is not in expected format:", data);
         }

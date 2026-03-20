@@ -200,9 +200,10 @@ const EmployeeUpdate: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         //("Departments API Response:", JSON.stringify(data, null, 2));
-        if (data.DepartmentList && Array.isArray(data.DepartmentList)) {
-          setDepartments(data.DepartmentList);
-          const selectedDept = data.DepartmentList.find(
+        const rawUnits = data.UnitList || data.DepartmentList;
+        if (rawUnits && Array.isArray(rawUnits)) {
+          setDepartments(rawUnits);
+          const selectedDept = rawUnits.find(
             (dept: Department) => dept.id === employeeDetails.dptId
           );
           if (selectedDept) {
