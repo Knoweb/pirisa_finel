@@ -39,12 +39,12 @@ const DepartmentStats = () => {
           }
         );
 
-        if (!res.ok) {
+        if (!response.ok) {
           setEmployees([]);
           return;
         }
 
-        const json = await res.json();
+        const json = await response.json();
         if (json?.resultCode === 100 && Array.isArray(json?.EmployeeList)) {
           setEmployees(json.EmployeeList);
         } else {

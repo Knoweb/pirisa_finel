@@ -110,7 +110,7 @@ const EmployeeProfile = () => {
       // Fetch leave balances from backend (supports Balance As-of Date modes)
       try {
         const leaveBalanceResponse = await fetch(
-          `/leave_balance/employee/${empId}?asOfMode=${asOfMode}`,
+          `/api/leave_balance/employee/${empId}?asOfMode=${asOfMode}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -204,7 +204,7 @@ const EmployeeProfile = () => {
         // Use profile image API for photo, document API for others
         const url = docType === "photo" 
           ? `/api/profile-image/exists/${empId}`
-          : `/document/view/emp/${empId}/${docType}`;
+          : `/api/document/view/emp/${empId}/${docType}`;
           
         const response = await fetch(url, {
           headers: {
@@ -243,7 +243,7 @@ const EmployeeProfile = () => {
       // Use profile image API for photo, document API for others
       const url = documentType === "photo" 
         ? `/api/profile-image/view/${empId}`
-        : `/document/view/emp/${empId}/${documentType}`;
+        : `/api/document/view/emp/${empId}/${documentType}`;
         
       const response = await fetch(url, {
         headers: {

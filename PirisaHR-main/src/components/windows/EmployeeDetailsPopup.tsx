@@ -107,7 +107,7 @@ const EmployeeDetailsPopup: React.FC<EmployeeDetailsPopupProps> = ({
     for (const docType of documentTypes) {
       try {
         const response = await fetch(
-          `/document/view/emp/${empId}/${docType}`,
+          `/api/document/view/emp/${empId}/${docType}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -135,7 +135,7 @@ const EmployeeDetailsPopup: React.FC<EmployeeDetailsPopupProps> = ({
 
           // Fetch employee details
           const employeeResponse = await fetch(
-            `/employee/emp/${id}`,
+          `/api/employee/emp/${id}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
@@ -158,7 +158,7 @@ const EmployeeDetailsPopup: React.FC<EmployeeDetailsPopupProps> = ({
           // Fetch company leave types (non-blocking)
           try {
             const companyLeaveResponse = await fetch(
-              `/company_leave/company/${cmpnyId}`,
+              `/api/company_leave/company/${cmpnyId}`,
               {
                 headers: {
                   Authorization: `Bearer ${token}`,
@@ -324,7 +324,7 @@ const EmployeeDetailsPopup: React.FC<EmployeeDetailsPopupProps> = ({
         return;
       }
 
-      const url = `/document/view/emp/${id}/${documentType}`;
+      const url = `/api/document/view/emp/${id}/${documentType}`;
 
       const response = await fetch(url, {
         headers: {

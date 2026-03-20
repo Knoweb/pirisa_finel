@@ -91,9 +91,9 @@ const PasswordReset = () => {
       };
 
       if (role === "EMPLOYEE" && empId) {
-        apiUrl = `/employee/changePassword/${empId}`;
+        apiUrl = `/api/employee/changePassword/${empId}`;
       } else if (role === "CMPNY" && cmpId) {
-        apiUrl = `/company/changePassword/${cmpId}`;
+        apiUrl = `/api/company/changePassword/${cmpId}`;
       } else {
         throw new Error("Invalid user role or missing ID");
       }

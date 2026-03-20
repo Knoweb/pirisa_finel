@@ -60,8 +60,8 @@ const OTSetting: React.FC = () => {
     try {
       const method = otDetails?.id ? "PUT" : "POST";
       const url = otDetails?.id
-        ? `/companyOT/${cmpId}`
-        : "/companyOT/add_OTDetails";
+        ? `/api/companyOT/${cmpId}`
+        : "/api/companyOT/add_OTDetails";
 
       const response = await fetch(url, {
         method,
@@ -116,7 +116,7 @@ const OTSetting: React.FC = () => {
 
       try {
         const response = await fetch(
-          `/companyOT/${cmpId}`,
+          `/api/companyOT/${cmpId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
