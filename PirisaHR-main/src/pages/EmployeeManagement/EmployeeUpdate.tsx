@@ -17,10 +17,10 @@ interface EmployeeDetails {
   basic_salary: number;
   email: string;
   gender: string;
-  DOB: string;
+  dob: string;
   phone: string;
   address: string;
-  NIC: string;
+  nic: string;
   date_of_joining: string;
   cmp_id: number;
   dptId: number;
@@ -64,10 +64,10 @@ const EmployeeUpdate: React.FC = () => {
     basic_salary: 0,
     email: "",
     gender: "",
-    DOB: "",
+    dob: "",
     phone: "",
     address: "",
-    NIC: "",
+    nic: "",
     date_of_joining: "",
     cmp_id: 0,
     dptId: 0,
@@ -389,10 +389,10 @@ const EmployeeUpdate: React.FC = () => {
       basic_salary: Number(employeeDetails.basic_salary),
       email: employeeDetails.email.trim(),
       gender: employeeDetails.gender,
-      DOB: formattedDOB,
+      dob: formattedDOB,
       phone: employeeDetails.phone.trim(),
       address: employeeDetails.address.trim(),
-      NIC: employeeDetails.NIC.trim(),
+      nic: employeeDetails.nic.trim(),
       date_of_joining: formattedJoiningDate,
       cmpId: Number(cmpId),
       dptId: Number(employeeDetails.dptId),
@@ -676,8 +676,8 @@ const EmployeeUpdate: React.FC = () => {
             </label>
             <input
               type="date"
-              name="DOB"
-              value={employeeDetails.DOB}
+              name="dob"
+              value={employeeDetails.dob}
               onChange={handleInputChange}
               className="mt-1 px-3 block w-full h-10 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               required
@@ -717,8 +717,8 @@ const EmployeeUpdate: React.FC = () => {
             </label>
             <input
               type="text"
-              name="NIC"
-              value={employeeDetails.NIC}
+              name="nic"
+              value={employeeDetails.nic}
               onChange={handleInputChange}
               className="mt-1 px-3 block w-full h-10 rounded-md border border-gray-300 focus:border-blue-500 focus:ring-blue-500"
               placeholder="Enter NIC"
