@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/additional_attendance")
+@RequestMapping("/additional_attendance")
 public class Additional_attendanceController {
 
     @Autowired

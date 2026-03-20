@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/designation")
+@RequestMapping("/designation")
 public class DesignationController {
 
     @Autowired

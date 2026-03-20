@@ -18,7 +18,7 @@ import java.time.LocalDate;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/employee")
+@RequestMapping("/employee")
 public class EmployeeController {
 
     @Autowired

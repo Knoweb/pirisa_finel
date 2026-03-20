@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/password")
+@RequestMapping("/password")
 public class PasswordController {
 
     private final PasswordResetService resetService;

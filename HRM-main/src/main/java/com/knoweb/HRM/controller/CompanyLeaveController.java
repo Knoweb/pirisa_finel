@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/company_leave")
+@RequestMapping("/company_leave")
 public class CompanyLeaveController {
 
     @Autowired

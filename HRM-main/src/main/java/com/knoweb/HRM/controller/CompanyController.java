@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/company")
+@RequestMapping("/company")
 public class CompanyController {
 
     @Autowired
