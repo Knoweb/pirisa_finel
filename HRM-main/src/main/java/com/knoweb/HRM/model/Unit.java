@@ -23,13 +23,13 @@ public class Unit implements Serializable {
     private Long id;
 
     @Column(name = "dpt_name")
-    private String dptName;
+    private String dpt_name;
 
     @Column(name = "dpt_code")
-    private String dptCode;
+    private String dpt_code;
 
     @Column(name = "dpt_desc")
-    private String dptDesc;
+    private String dpt_desc;
 
     @Column(name = "cmp_id")
     private Long cmpId;

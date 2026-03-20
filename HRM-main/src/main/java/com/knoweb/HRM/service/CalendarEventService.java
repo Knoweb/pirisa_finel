@@ -439,7 +439,7 @@ public class CalendarEventService {
             List<Unit> departments = unitRepository.findByCmpId(companyId);
             logger.info("Found {} departments for company ID: {}", departments.size(), companyId);
             for (Unit dept : departments) {
-                logger.debug("Unit: {} (ID: {})", dept.getDptName(), dept.getId());
+                logger.debug("Unit: {} (ID: {})", dept.getDpt_name(), dept.getId());
             }
             return departments;
         } catch (Exception e) {
@@ -869,7 +869,7 @@ public class CalendarEventService {
                     if (event.getUnitId() != null) {
                         Unit department = unitRepository.findById(event.getUnitId()).orElse(null);
                         if (department != null) {
-                            details.put("departmentName", department.getDptName());
+                            details.put("departmentName", department.getDpt_name());
                             List<Employee> employees = employeeRepository.findByDptId(event.getUnitId());
                             details.put("assignedEmployees", employees);
                             details.put("assignedCount", employees.size());
@@ -998,7 +998,7 @@ public class CalendarEventService {
                     // Search by department
                     if (emp.getDepartment() != null) {
                         String deptName = emp.getDepartment() instanceof Unit ? 
-                            ((Unit) emp.getDepartment()).getDptName().toLowerCase() :
+                            ((Unit) emp.getDepartment()).getDpt_name().toLowerCase() :
                             emp.getDepartment().toString().toLowerCase();
                         if (deptName.contains(normalizedQuery)) {
                             return true;

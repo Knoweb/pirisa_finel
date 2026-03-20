@@ -26,9 +26,9 @@ public class UnitService {
         Optional<Unit> existingDept = unitRepository.findById(unit.getId());
         if (existingDept.isPresent()) {
             Unit dept = existingDept.get();
-            dept.setDptName(unit.getDptName());
-            dept.setDptCode(unit.getDptCode());
-            dept.setDptDesc(unit.getDptDesc());
+            dept.setDpt_name(unit.getDpt_name());
+            dept.setDpt_code(unit.getDpt_code());
+            dept.setDpt_desc(unit.getDpt_desc());
             return unitRepository.save(dept);
         }
         return null;
@@ -51,9 +51,9 @@ public class UnitService {
         
         return allDepts.stream()
                 .filter(dept -> 
-                    dept.getDptName().toLowerCase().contains(lowercaseQuery) ||
-                    dept.getDptCode().toLowerCase().contains(lowercaseQuery) ||
-                    (dept.getDptDesc() != null && dept.getDptDesc().toLowerCase().contains(lowercaseQuery))
+                    dept.getDpt_name().toLowerCase().contains(lowercaseQuery) ||
+                    dept.getDpt_code().toLowerCase().contains(lowercaseQuery) ||
+                    (dept.getDpt_desc() != null && dept.getDpt_desc().toLowerCase().contains(lowercaseQuery))
                 )
                 .collect(java.util.stream.Collectors.toList());
     }

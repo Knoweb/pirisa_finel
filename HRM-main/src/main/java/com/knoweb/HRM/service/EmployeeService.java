@@ -117,9 +117,9 @@ public class EmployeeService {
                 )).collect(Collectors.toList()),
                 new EmpDetailsDepartmentDTO(
                         (employee.getDepartment() != null) ? employee.getDepartment().getId(): null,
-                        (employee.getDepartment() != null) ? employee.getDepartment().getDptName(): null,
-                        (employee.getDepartment() != null) ? employee.getDepartment().getDptCode(): null,
-                        (employee.getDepartment() != null) ? employee.getDepartment().getDptDesc(): null
+                        (employee.getDepartment() != null) ? employee.getDepartment().getDpt_name(): null,
+                        (employee.getDepartment() != null) ? employee.getDepartment().getDpt_code(): null,
+                        (employee.getDepartment() != null) ? employee.getDepartment().getDpt_desc(): null
                 ),
                 new EmpDetailsDocumentsDTO(
                         (employee.getDocuments() != null) ? employee.getDocuments().getPhoto() : null
@@ -240,9 +240,9 @@ public class EmployeeService {
 
                     new EmpDetailsDepartmentDTO(
                             employee.getDepartment() != null ? employee.getDepartment().getId() : null,
-                            employee.getDepartment() != null ? employee.getDepartment().getDptName() : null,
-                            employee.getDepartment() != null ? employee.getDepartment().getDptCode() : null,
-                            employee.getDepartment() != null ? employee.getDepartment().getDptDesc() : null
+                            employee.getDepartment() != null ? employee.getDepartment().getDpt_name() : null,
+                            employee.getDepartment() != null ? employee.getDepartment().getDpt_code() : null,
+                            employee.getDepartment() != null ? employee.getDepartment().getDpt_desc() : null
                     ),
                     new EmpDetailsDesignationDTO(
                             employee.getDesignation() != null ? employee.getDesignation().getId() : null,
@@ -294,9 +294,9 @@ public class EmployeeService {
 
                     new EmpDetailsDepartmentDTO(
                             employee.getDepartment() != null ? employee.getDepartment().getId() : null,
-                            employee.getDepartment() != null ? employee.getDepartment().getDptName() : null,
-                            employee.getDepartment() != null ? employee.getDepartment().getDptCode() : null,
-                            employee.getDepartment() != null ? employee.getDepartment().getDptDesc() : null
+                            employee.getDepartment() != null ? employee.getDepartment().getDpt_name() : null,
+                            employee.getDepartment() != null ? employee.getDepartment().getDpt_code() : null,
+                            employee.getDepartment() != null ? employee.getDepartment().getDpt_desc() : null
                     ),
                     new EmpDetailsDesignationDTO(
                             employee.getDesignation() != null ? employee.getDesignation().getId() : null,
@@ -352,9 +352,9 @@ public class EmployeeService {
                             employee.getStatus(),
                             new EmpDetailsDepartmentDTO(
                                     employee.getDepartment() != null ? employee.getDepartment().getId() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptName() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptCode() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptDesc() : null
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_name() : null,
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_code() : null,
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_desc() : null
                             ),
                             new EmpDetailsDesignationDTO(
                                     employee.getDesignation() != null ? employee.getDesignation().getId() : null,
@@ -406,9 +406,9 @@ public class EmployeeService {
                             employee.getStatus(),
                             new EmpDetailsDepartmentDTO(
                                     employee.getDepartment() != null ? employee.getDepartment().getId() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptName() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptCode() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptDesc() : null
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_name() : null,
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_code() : null,
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_desc() : null
                             ),
                             new EmpDetailsDesignationDTO(
                                     employee.getDesignation() != null ? employee.getDesignation().getId() : null,
@@ -461,9 +461,9 @@ public class EmployeeService {
                             employee.getStatus(),
                             new EmpDetailsDepartmentDTO(
                                     employee.getDepartment() != null ? employee.getDepartment().getId() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptName() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptCode() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptDesc() : null
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_name() : null,
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_code() : null,
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_desc() : null
                             ),
                             new EmpDetailsDesignationDTO(
                                     employee.getDesignation() != null ? employee.getDesignation().getId() : null,
@@ -506,9 +506,9 @@ public class EmployeeService {
             EmpDetailsDepartmentDTO departmentDTO = (employee.getDepartment() != null) ?
                     new EmpDetailsDepartmentDTO(
                             employee.getDepartment().getId(),
-                            employee.getDepartment().getDptName(),
-                            employee.getDepartment().getDptCode(),
-                            employee.getDepartment().getDptDesc()
+                            employee.getDepartment().getDpt_name(),
+                            employee.getDepartment().getDpt_code(),
+                            employee.getDepartment().getDpt_desc()
                     ) : null;
 
             EmpDetailsDocumentsDTO documentDTO = (employee.getDocuments() != null) ?
@@ -588,9 +588,9 @@ public class EmployeeService {
 
                             new EmpDetailsDepartmentDTO(
                                     employee.getDepartment() != null ? employee.getDepartment().getId() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptName() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptCode() : null,
-                                    employee.getDepartment() != null ? employee.getDepartment().getDptDesc() : null
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_name() : null,
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_code() : null,
+                                    employee.getDepartment() != null ? employee.getDepartment().getDpt_desc() : null
                             ),
                             new EmpDetailsDesignationDTO(
                                     employee.getDesignation() != null ? employee.getDesignation().getId() : null,
@@ -672,11 +672,11 @@ public class EmployeeService {
                                     Optional.ofNullable(employee.getDepartment())
                                             .map(d -> d.getId()).orElse(null),
                                     Optional.ofNullable(employee.getDepartment())
-                                            .map(d -> d.getDptName()).orElse(null),
+                                            .map(d -> d.getDpt_name()).orElse(null),
                                     Optional.ofNullable(employee.getDepartment())
-                                            .map(d -> d.getDptCode()).orElse(null),
+                                            .map(d -> d.getDpt_code()).orElse(null),
                                     Optional.ofNullable(employee.getDepartment())
-                                            .map(d -> d.getDptDesc()).orElse(null)
+                                            .map(d -> d.getDpt_desc()).orElse(null)
                             ),
                             // documents DTO
                             new EmpDetailsDocumentsDTO(
