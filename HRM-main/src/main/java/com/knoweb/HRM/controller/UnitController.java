@@ -27,8 +27,8 @@ public class UnitController {
             // Check for duplicate unit code or name within the same company
             List<Unit> existingDepts = unitService.getUnitsByCompanyId(unit.getCmpId());
             boolean duplicate = existingDepts.stream().anyMatch(dept -> 
-                dept.getDpt_code().equals(unit.getDpt_code()) || 
-                dept.getDpt_name().equalsIgnoreCase(unit.getDpt_name())
+                (dept.getDpt_code() != null && dept.getDpt_code().equals(unit.getDpt_code())) || 
+                (dept.getDpt_name() != null && dept.getDpt_name().equalsIgnoreCase(unit.getDpt_name()))
             );
             
             if (duplicate) {
@@ -98,8 +98,8 @@ public class UnitController {
             List<Unit> existingDepts = unitService.getUnitsByCompanyId(unit.getCmpId());
             boolean duplicate = existingDepts.stream().anyMatch(dept -> 
                 dept.getId() != unit.getId() && (
-                    dept.getDpt_code().equals(unit.getDpt_code()) || 
-                    dept.getDpt_name().equalsIgnoreCase(unit.getDpt_name())
+                    (dept.getDpt_code() != null && dept.getDpt_code().equals(unit.getDpt_code())) || 
+                    (dept.getDpt_name() != null && dept.getDpt_name().equalsIgnoreCase(unit.getDpt_name()))
                 )
             );
             
