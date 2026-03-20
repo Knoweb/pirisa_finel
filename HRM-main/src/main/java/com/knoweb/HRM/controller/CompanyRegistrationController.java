@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/company")
+@RequestMapping("/company")
 @CrossOrigin(origins = "http://localhost:5174")
 public class CompanyRegistrationController {
 

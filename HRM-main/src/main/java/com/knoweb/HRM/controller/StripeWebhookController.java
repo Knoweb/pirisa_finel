@@ -24,7 +24,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/webhook")
+@RequestMapping("/webhook")
 public class StripeWebhookController {
 
     @Value("${stripe.webhook.secret}")

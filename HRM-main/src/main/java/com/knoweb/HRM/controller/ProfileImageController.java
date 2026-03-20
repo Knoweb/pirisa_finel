@@ -14,7 +14,7 @@ import java.io.IOException;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/profile-image")
+@RequestMapping("/profile-image")
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:3001", "http://localhost:5174", "http://127.0.0.1:3000", "http://127.0.0.1:3001", "http://127.0.0.1:5174"})
 public class ProfileImageController {
 
