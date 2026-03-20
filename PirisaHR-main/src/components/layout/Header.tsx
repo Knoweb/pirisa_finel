@@ -454,7 +454,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
         if (cmpId) {
           const logoResponse = await fetch(
-            `/logo/view/${cmpId}`,
+            `/api/logo/view/${cmpId}`,
             {
               headers: {
                 Authorization: `Bearer ${token}`,
