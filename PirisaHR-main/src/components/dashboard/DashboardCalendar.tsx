@@ -513,11 +513,11 @@ const DashboardCalendar: React.FC = () => {
             dptName: d.dpt_name || d.dptName || d.unit_name || 'Unknown',
             dptCode: d.dpt_code || d.dptCode || d.unit_code || '',
             dptDesc: d.dpt_desc || d.dptDesc || d.unit_desc || '',
-            cmpId: d.cmpId || (companyId ? parseInt(companyId) : 0),
+            cmpId: Number(d.cmpId || companyId || 0),
             designationList: d.designationList || []
           }));
           console.log(`Found ${mappedDepartments.length} departments:`, mappedDepartments);
-          const allDepartmentsOption: Department = { id: 0, dptName: 'All Departments', dptCode: 'ALL', dptDesc: 'All Departments', cmpId: companyId ? parseInt(companyId) : 0, designationList: [] };
+          const allDepartmentsOption: Department = { id: 0, dptName: 'All Departments', dptCode: 'ALL', dptDesc: 'All Departments', cmpId: Number(companyId || 0), designationList: [] };
           setDepartments([allDepartmentsOption, ...mappedDepartments]);
         } else {
           console.error('Departments API error:', data.resultDesc);
