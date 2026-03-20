@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/calendar")
+@RequestMapping("/api/calendar")
 @CrossOrigin(origins = "http://localhost:5174")
 public class CalendarEventController {
 

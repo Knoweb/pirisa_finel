@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/leave_balance")
+@RequestMapping("/api/leave_balance")
 public class LeaveBalanceController {
 
     @Autowired

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/emp_leave")
+@RequestMapping("/api/emp_leave")
 public class EmployeeLeaveRequestController {
 
 

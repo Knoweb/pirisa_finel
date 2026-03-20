@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/department")
+@RequestMapping("/api/department")
 public class UnitController {
 
     @Autowired

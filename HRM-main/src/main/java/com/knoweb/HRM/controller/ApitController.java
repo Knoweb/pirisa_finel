@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping("/apit")
+@RequestMapping("/api/apit")
 public class ApitController {
 
     @Autowired
