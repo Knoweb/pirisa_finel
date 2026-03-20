@@ -15,14 +15,13 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/attendance")
+@RequestMapping("/api/attendance")
 public class AttendanceController {
 
     @Autowired
     private AttendanceService attendanceService;
 
-
-    @PostMapping(value = "/add_attendance", produces = {"application/json"})
+    @PostMapping(value = "/add_attendance", produces = { "application/json" })
     public ResponseEntity<?> addAttendance(@RequestBody Attendance attendance) {
         try {
             Attendance createdAttendance = attendanceService.createAttendance(attendance);
@@ -43,7 +42,6 @@ public class AttendanceController {
             return handleException(e);
         }
     }
-
 
     @GetMapping(value = "/employee/{empId}", produces = "application/json")
     public ResponseEntity<?> getAttendanceByEmployeeId(@PathVariable long empId) {
@@ -66,8 +64,7 @@ public class AttendanceController {
         }
     }
 
-
-// get attendance by employee id and month
+    // get attendance by employee id and month
 
     @GetMapping(value = "/employee/{empId}/month/{month}", produces = "application/json")
     public ResponseEntity<?> getAttendanceByEmployeeAndMonth(
@@ -79,8 +76,7 @@ public class AttendanceController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(Collections.singletonMap(
                             "message",
-                            "No attendance found for employee " + empId + " in month " + month
-                    ));
+                            "No attendance found for employee " + empId + " in month " + month));
         }
         Map<String, Object> resp = new HashMap<>();
         resp.put("resultCode", 100);
@@ -89,31 +85,30 @@ public class AttendanceController {
         return ResponseEntity.ok(resp);
     }
 
-
-
-
-//
-//    @GetMapping(value = "/company/{cmpId}", produces = "application/json")
-//    public ResponseEntity<?> getAttendanceByCompanyId(@PathVariable long cmpId) {
-//        try {
-//            List<Attendance> attendances = attendanceService.getAttendanceByCompanyId(cmpId);
-//            if (attendances.isEmpty()) {
-//                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-//                        .body(Collections.singletonMap("message", "No attendance found for this Company ID"));
-//            }
-//
-//            Map<String, Object> response = new HashMap<>();
-//            response.put("resultCode", 100);
-//            response.put("resultDesc", "Successful");
-//            response.put("AttendanceList", attendances);
-//
-//            return ResponseEntity.ok(response);
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(Collections.singletonMap("error", "An error occurred while fetching employees"));
-//        }
-//    }
-
+    //
+    // @GetMapping(value = "/company/{cmpId}", produces = "application/json")
+    // public ResponseEntity<?> getAttendanceByCompanyId(@PathVariable long cmpId) {
+    // try {
+    // List<Attendance> attendances =
+    // attendanceService.getAttendanceByCompanyId(cmpId);
+    // if (attendances.isEmpty()) {
+    // return ResponseEntity.status(HttpStatus.NOT_FOUND)
+    // .body(Collections.singletonMap("message", "No attendance found for this
+    // Company ID"));
+    // }
+    //
+    // Map<String, Object> response = new HashMap<>();
+    // response.put("resultCode", 100);
+    // response.put("resultDesc", "Successful");
+    // response.put("AttendanceList", attendances);
+    //
+    // return ResponseEntity.ok(response);
+    // } catch (Exception e) {
+    // return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+    // .body(Collections.singletonMap("error", "An error occurred while fetching
+    // employees"));
+    // }
+    // }
 
     @DeleteMapping("/{atdnc_id}")
     public ResponseEntity<?> deleteAttendance(@PathVariable Long atdnc_id) {
@@ -134,8 +129,7 @@ public class AttendanceController {
         }
     }
 
-
-    @PutMapping(value = "/update/{atdnc_id}", produces = {"application/json"})
+    @PutMapping(value = "/update/{atdnc_id}", produces = { "application/json" })
     public ResponseEntity<?> updateAttendance(@PathVariable Long atdnc_id, @RequestBody Attendance updateAttendance) {
 
         Attendance attendance = attendanceService.updateAttendance(atdnc_id, updateAttendance);
