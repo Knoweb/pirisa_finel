@@ -1,27 +1,23 @@
 import { useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
 
 const Logout = () => {
-    const navigate = useNavigate();
-    const location = useLocation();
-
     useEffect(() => {
         // Clear all storage
         localStorage.clear();
         sessionStorage.clear();
 
-        // Check for returnTo parameter in URL
-        const params = new URLSearchParams(location.search);
+        // Check for returnTo parameter in URL (for SSO chain)
+        const params = new URLSearchParams(window.location.search);
         const returnTo = params.get('returnTo');
 
         if (returnTo) {
-            // If returnTo exists, redirect to that URL
+            // If part of a chain, continue to next system
             window.location.href = returnTo;
         } else {
-            // Default fallback to login
-            navigate('/login');
+            // Standalone logout: go to the main dashboard login as requested
+            window.location.href = "http://167.71.206.166:3000/login";
         }
-    }, [navigate, location]);
+    }, []);
 
     return (
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
