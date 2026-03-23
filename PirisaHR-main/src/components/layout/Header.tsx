@@ -127,7 +127,7 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
     localStorage.removeItem("companyId");
     localStorage.removeItem("empId");
     localStorage.removeItem("username");
-    navigate("/login");
+    window.location.href = "http://167.71.206.166:3000/login";
     setIsProfileDropdownOpen(false); // Close dropdown after click
     //console.log("User logged out");
   };
