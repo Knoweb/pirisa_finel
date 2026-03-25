@@ -29,6 +29,7 @@ function Profile() {
     factoryAddress?: string;
   }
 
+
   const [companyData, setCompanyData] = useState<CompanyDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ function Profile() {
     const fetchCompanyData = async () => {
       const token = localStorage.getItem("token");
       const cmpId = localStorage.getItem("cmpnyId");
-      
+
       console.log("DEBUG - localStorage values:", { token: token ? "exists" : "null", cmpId });
 
       if (!token || !cmpId) {
