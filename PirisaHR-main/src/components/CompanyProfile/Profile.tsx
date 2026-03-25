@@ -24,6 +24,9 @@ function Profile() {
     vat_no?: string;
     package_name?: string;
     company_status?: string;
+    joinedAt?: string;
+    industryType?: string;
+    factoryAddress?: string;
   }
 
   const [companyData, setCompanyData] = useState<CompanyDetails | null>(null);
@@ -170,7 +173,7 @@ function Profile() {
             </div>
             <div>
               <p className="text-gray-500 text-sm">Company Category</p>
-              <p className="text-gray-900 font-medium">IT and Technology</p>
+              <p className="text-gray-900 font-medium">{companyData?.industryType || "General"}</p>
             </div>
           </div>
         </div>
@@ -206,7 +209,7 @@ function Profile() {
           </div>
           <div>
             <p className="text-gray-500 text-sm">Company Factory Address</p>
-            <p className="text-gray-900 font-medium">He He, Galle</p>
+            <p className="text-gray-900 font-medium">{companyData?.factoryAddress || "N/A"}</p>
           </div>
           <div>
             <p className="text-gray-500 text-sm flex items-center gap-1">
@@ -228,7 +231,9 @@ function Profile() {
             <p className="text-gray-500 text-sm flex items-center gap-1">
               <FaCalendarAlt /> Date Joined
             </p>
-            <p className="text-gray-900 font-medium">2024-05-04</p>
+            <p className="text-gray-900 font-medium">
+              {companyData?.joinedAt ? new Date(companyData.joinedAt).toLocaleDateString() : "N/A"}
+            </p>
           </div>
         </div>
       </div>
