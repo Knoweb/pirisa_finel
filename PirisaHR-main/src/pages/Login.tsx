@@ -31,15 +31,38 @@ const LoginPage: React.FC = () => {
       if (urlToken && urlEmail) {
         console.log("SSO - Incoming token from URL:", urlEmail);
         
-        // Set up session data
-        localStorage.setItem("token", urlToken); // Use the actual token from main dashboard
-        localStorage.setItem("role", "CMPNY");
-        localStorage.setItem("username", urlEmail);
-        localStorage.setItem("companyName", urlCompanyName);
-        if (urlOrgId) localStorage.setItem("cmpnyId", urlOrgId);
+        // Resolve local company ID from orgId
+        const resolveCompanyId = async () => {
+          try {
+            const orgIdPara = urlOrgId;
+            const res = await fetch(backendUrl(`/company/by-org/${orgIdPara}`), {
+              headers: { Authorization: `Bearer ${urlToken}` }
+            });
+            const data = await res.json();
+            
+            const localCmpId = data.resultCode === 100 ? data.Company.id : orgIdPara;
+            console.log("SSO - Resolved local cmpId:", localCmpId);
 
-        toast.success(`Welcome ${urlCompanyName}! Logged in via KNOWEB`);
-        navigate("/dashboard");
+            // Set up session data with CORRECT local ID
+            localStorage.setItem("token", urlToken);
+            localStorage.setItem("role", "CMPNY");
+            localStorage.setItem("username", urlEmail);
+            localStorage.setItem("companyName", urlCompanyName);
+            localStorage.setItem("cmpnyId", localCmpId.toString());
+            localStorage.setItem("companyId", localCmpId.toString());
+
+            toast.success(`Welcome ${urlCompanyName}! Logged in via KNOWEB`);
+            navigate("/dashboard");
+          } catch (err) {
+            console.error("SSO Resolve Failed:", err);
+            // Fallback (risky but better than nothing)
+            localStorage.setItem("token", urlToken);
+            localStorage.setItem("cmpnyId", urlOrgId || "1");
+            navigate("/dashboard");
+          }
+        };
+
+        resolveCompanyId();
         return;
       }
 

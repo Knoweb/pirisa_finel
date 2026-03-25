@@ -186,6 +186,26 @@ public class CompanyController {
 
 
 
+    @GetMapping(value = "/by-org/{orgId}", produces = "application/json")
+    public ResponseEntity<?> getByOrgId(@PathVariable Long orgId) {
+        try {
+            Company company = companyRepository.findByOrgId(orgId);
+            if (company != null) {
+                Map<String, Object> response = new HashMap<>();
+                response.put("resultCode", 100);
+                response.put("resultDesc", "Successful");
+                response.put("Company", company);
+                return ResponseEntity.ok(response);
+            }
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(Collections.singletonMap("message", "Company not found for orgId: " + orgId));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.singletonMap("error", e.getMessage()));
+        }
+    }
+
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
         Map<String, Object> errorResponse = new HashMap<>();
