@@ -55,7 +55,7 @@ public class CompanyController {
 
     @PostMapping(value = "/add_company", produces = {"application/json"})
     public ResponseEntity<?> addCompany(@RequestBody Company company) {
-        try {
+            System.out.println("DEBUG - Pirisa addCompany received for: " + company.getCmpEmail() + ", orgId: " + company.getOrgId());
             String hashedPassword = bCryptPasswordEncoder.passwordEncoder().encode(company.getCmp_password());
             company.setCmp_password(hashedPassword);
 
@@ -208,15 +208,18 @@ public class CompanyController {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleException(Exception e) {
+        System.err.println("EXCEPTION in CompanyController: " + e.getMessage());
+        e.printStackTrace();
+        
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("resultCode", 101);
-        errorResponse.put("resultDesc", "ERROR");
+        errorResponse.put("resultDesc", "ERROR: " + e.getMessage());
 
         String jsonResponse;
         try {
             jsonResponse = new ObjectMapper().writeValueAsString(errorResponse);
         } catch (Exception ex) {
-            jsonResponse = "{\"resultCode\":101,\"resultDesc\":\"ERROR\"}";
+            jsonResponse = "{\"resultCode\":101,\"resultDesc\":\"ERROR: internal serialization failed\"}";
         }
         return new ResponseEntity<>(jsonResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
