@@ -32,6 +32,10 @@ public class CompanyRegistrationRequest {
 
     private Long orgId;
 
+    private String cmpRegNo;
+    private String tinNo;
+    private String vatNo;
+
     // Getters and Setters
     public Long getOrgId() {
         return orgId;
@@ -87,5 +91,29 @@ public class CompanyRegistrationRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getCmpRegNo() {
+        return cmpRegNo;
+    }
+
+    public void setCmpRegNo(String cmpRegNo) {
+        this.cmpRegNo = cmpRegNo;
+    }
+
+    public String getTinNo() {
+        return tinNo;
+    }
+
+    public void setTinNo(String tinNo) {
+        this.tinNo = tinNo;
+    }
+
+    public String getVatNo() {
+        return vatNo;
+    }
+
+    public void setVatNo(String vatNo) {
+        this.vatNo = vatNo;
     }
 }

@@ -55,6 +55,9 @@ public class CompanyRegistrationService {
             if (request.getOrgId() != null) {
                 company.setOrgId(request.getOrgId());
             }
+            company.setCmp_reg_no(request.getCmpRegNo());
+            company.setTin_no(request.getTinNo());
+            company.setVat_no(request.getVatNo());
             
             System.out.println("DEBUG - Saving company with data:");
             System.out.println("  cmp_name: " + company.getCmp_name());
