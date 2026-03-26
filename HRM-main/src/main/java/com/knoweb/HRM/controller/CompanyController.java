@@ -55,6 +55,7 @@ public class CompanyController {
 
     @PostMapping(value = "/add_company", produces = {"application/json"})
     public ResponseEntity<?> addCompany(@RequestBody Company company) {
+        try {
             System.out.println("DEBUG - Pirisa addCompany received for: " + company.getCmpEmail() + ", orgId: " + company.getOrgId());
             String hashedPassword = bCryptPasswordEncoder.passwordEncoder().encode(company.getCmp_password());
             company.setCmp_password(hashedPassword);
