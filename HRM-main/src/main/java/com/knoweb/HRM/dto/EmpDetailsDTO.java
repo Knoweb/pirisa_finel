@@ -27,5 +27,8 @@ public class EmpDetailsDTO {
     private EmpDetailsDesignationDTO designation;
     private EmpDetailsDocumentsDTO photo;
     private List<EmpDetailsLeaveDTO> leaveList;
+    private String deviceSyncStatus;
+    private String deviceSyncError;
+    private java.time.LocalDateTime deviceSyncAt;
 
 }

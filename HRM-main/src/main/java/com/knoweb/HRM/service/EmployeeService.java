@@ -3,15 +3,17 @@ package com.knoweb.HRM.service;
 import com.knoweb.HRM.config.SecurityConfig;
 import com.knoweb.HRM.dto.*;
 import com.knoweb.HRM.model.Attendance;
-import com.knoweb.HRM.model.Company;
 import com.knoweb.HRM.model.Employee;
 import com.knoweb.HRM.repository.EmployeeRepository;
+import com.knoweb.HRM.service.hikvision.HikvisionProvisioningService;
+import com.knoweb.HRM.service.hikvision.HikvisionProvisioningResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,9 @@ public class EmployeeService {
 
     @Autowired
     private EmailService emailService;
+
+    @Autowired
+    private HikvisionProvisioningService hikvisionProvisioningService;
 
 //    public Employee createEmployee(Employee employee) {
 //        return employeeRepository.save(employee);
@@ -48,9 +53,12 @@ public class EmployeeService {
         // 2) Hash & set on entity
         emp.setPassword(passwordEncoder.encode(tempPwd));
         emp.setMustReset(true);
+        emp.setDeviceSyncStatus("PENDING");
+        emp.setDeviceSyncError(null);
+        emp.setDeviceSyncAt(LocalDateTime.now());
 
         // 3) Save to DB
-        Employee saved = employeeRepository.save(emp);
+        Employee saved = employeeRepository.saveAndFlush(emp);
 
         // 4) Email the temporary password
         String subject = "Your HRM Account Details";
@@ -63,6 +71,9 @@ public class EmployeeService {
                 emp.getFirst_name(), tempPwd
         );
         emailService.sendEmail(emp.getEmail(), subject, body);
+
+        HikvisionProvisioningResult provisioningResult = hikvisionProvisioningService.syncEmployeeToDevice(saved);
+        applyDeviceSyncResult(saved, provisioningResult);
 
         return saved;
     }
@@ -223,7 +234,7 @@ public class EmployeeService {
             )).collect(Collectors.toList())
                     : Collections.emptyList();
 
-            return new EmpDetailsDTO(
+            return withDeviceSync(new EmpDetailsDTO(
                     employee.getId(),
                     employee.getEpf_no(),
                     employee.getFirst_name(),
@@ -251,8 +262,9 @@ public class EmployeeService {
                     new EmpDetailsDocumentsDTO(
                             employee.getDocuments() != null ? employee.getDocuments().getPhoto() : null
                     ),
-                    leaveList
-            );
+                    leaveList,
+                    null, null, null
+            ), employee);
         }).collect(Collectors.toList());
     }
 
@@ -277,7 +289,7 @@ public class EmployeeService {
             )).collect(Collectors.toList())
                     : Collections.emptyList();
 
-            return new EmpDetailsDTO(
+            return withDeviceSync(new EmpDetailsDTO(
                     employee.getId(),
                     employee.getEpf_no(),
                     employee.getFirst_name(),
@@ -305,8 +317,9 @@ public class EmployeeService {
                     new EmpDetailsDocumentsDTO(
                             employee.getDocuments() != null ? employee.getDocuments().getPhoto() : null
                     ),
-                    leaveList
-            );
+                    leaveList,
+                    null, null, null
+            ), employee);
         }).collect(Collectors.toList());
     }
 
@@ -336,7 +349,7 @@ public class EmployeeService {
                             ))
                             .collect(Collectors.toList());
 
-                    return new EmpDetailsDTO(
+                    return withDeviceSync(new EmpDetailsDTO(
                             employee.getId(),
                             employee.getEpf_no(),
                             employee.getFirst_name(),
@@ -363,8 +376,8 @@ public class EmployeeService {
                             new EmpDetailsDocumentsDTO(
                                     employee.getDocuments() != null ? employee.getDocuments().getPhoto() : null
                             ),
-                            leaveList
-                    );
+                            leaveList, null, null, null
+                    ), employee);
                 }).collect(Collectors.toList());
     }
 
@@ -390,7 +403,7 @@ public class EmployeeService {
                             ))
                             .collect(Collectors.toList());
 
-                    return new EmpDetailsDTO(
+                    return withDeviceSync(new EmpDetailsDTO(
                             employee.getId(),
                             employee.getEpf_no(),
                             employee.getFirst_name(),
@@ -417,8 +430,8 @@ public class EmployeeService {
                             new EmpDetailsDocumentsDTO(
                                     employee.getDocuments() != null ? employee.getDocuments().getPhoto() : null
                             ),
-                            leaveList
-                    );
+                            leaveList, null, null, null
+                    ), employee);
                 }).collect(Collectors.toList());
     }
 
@@ -445,7 +458,7 @@ public class EmployeeService {
                             ))
                             .collect(Collectors.toList());
 
-                    return new EmpDetailsDTO(
+                    return withDeviceSync(new EmpDetailsDTO(
                             employee.getId(),
                             employee.getEpf_no(),
                             employee.getFirst_name(),
@@ -472,8 +485,8 @@ public class EmployeeService {
                             new EmpDetailsDocumentsDTO(
                                     employee.getDocuments() != null ? employee.getDocuments().getPhoto() : null
                             ),
-                            leaveList
-                    );
+                            leaveList, null, null, null
+                    ), employee);
                 }).collect(Collectors.toList());
     }
 
@@ -570,8 +583,7 @@ public class EmployeeService {
 
                             ))
                             .collect(Collectors.toList());
-
-                    return new EmpDetailsDTO(
+                    return withDeviceSync(new EmpDetailsDTO(
                             employee.getId(),
                             employee.getEpf_no(),
                             employee.getFirst_name(),
@@ -585,7 +597,7 @@ public class EmployeeService {
                             employee.getNic(),
                             employee.getDob(),
                             employee.getStatus(),
-
+ 
                             new EmpDetailsDepartmentDTO(
                                     employee.getDepartment() != null ? employee.getDepartment().getId() : null,
                                     employee.getDepartment() != null ? employee.getDepartment().getDpt_name() : null,
@@ -599,8 +611,9 @@ public class EmployeeService {
                             new EmpDetailsDocumentsDTO(
                                     employee.getDocuments() != null ? employee.getDocuments().getPhoto() : null
                             ),
-                            leaveList
-                    );
+                            leaveList, null, null, null
+                    ), employee);
+
                 }).collect(Collectors.toList());
     }
 
@@ -629,9 +642,29 @@ public class EmployeeService {
             employee.setCmpId(updateEmployee.getCmpId());
             employee.setDptId(updateEmployee.getDptId());
             employee.setDesignationId(updateEmployee.getDesignationId());
-            return employeeRepository.save(employee);
+            employee.setDeviceSyncStatus("PENDING");
+            employee.setDeviceSyncError(null);
+            employee.setDeviceSyncAt(LocalDateTime.now());
+            Employee saved = employeeRepository.saveAndFlush(employee);
+            HikvisionProvisioningResult provisioningResult = hikvisionProvisioningService.syncEmployeeToDevice(saved);
+            applyDeviceSyncResult(saved, provisioningResult);
+            return saved;
         }
         return null;
+    }
+
+    private void applyDeviceSyncResult(Employee employee, HikvisionProvisioningResult result) {
+        employee.setDeviceSyncStatus(result.getStatus());
+        employee.setDeviceSyncError(result.getError());
+        employee.setDeviceSyncAt(LocalDateTime.now());
+        employeeRepository.saveAndFlush(employee);
+    }
+
+    private EmpDetailsDTO withDeviceSync(EmpDetailsDTO dto, Employee employee) {
+        dto.setDeviceSyncStatus(employee.getDeviceSyncStatus());
+        dto.setDeviceSyncError(employee.getDeviceSyncError());
+        dto.setDeviceSyncAt(employee.getDeviceSyncAt());
+        return dto;
     }
 
 
