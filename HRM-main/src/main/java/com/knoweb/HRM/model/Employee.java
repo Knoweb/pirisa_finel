@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -73,6 +74,15 @@ public class Employee implements Serializable {
     @Column(nullable = false)
     @JsonIgnore
     private boolean mustReset = true; // forces first-login reset
+
+    @Column(name = "device_sync_status")
+    private String deviceSyncStatus;
+
+    @Column(name = "device_sync_error", length = 1000)
+    private String deviceSyncError;
+
+    @Column(name = "device_sync_at")
+    private LocalDateTime deviceSyncAt;
 
     @OneToMany(targetEntity = Attendance.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "emp_id", referencedColumnName = "emp_id")

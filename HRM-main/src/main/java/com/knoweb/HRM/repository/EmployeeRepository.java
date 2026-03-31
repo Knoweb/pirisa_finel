@@ -8,6 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
@@ -45,4 +46,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     
     // Find employees by designation ID
     List<Employee> findByDesignationId(Long designationId);
+
+    @Query("SELECT e FROM Employee e WHERE LOWER(e.emp_no) = LOWER(:code) OR LOWER(e.epf_no) = LOWER(:code) OR LOWER(e.username) = LOWER(:code)")
+    Optional<Employee> findByDeviceCode(@Param("code") String code);
 }

@@ -21,4 +21,6 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
             @Param("empId") long empId,
             @Param("month") int month);
 
+    @Query("SELECT a FROM Attendance a WHERE a.empId = :empId AND a.endedAt IS NULL ORDER BY a.startedAt DESC")
+    List<Attendance> findOpenAttendances(@Param("empId") long empId);
 }
