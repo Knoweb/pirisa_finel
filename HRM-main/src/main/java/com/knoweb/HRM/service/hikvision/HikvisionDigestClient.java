@@ -4,6 +4,9 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.knoweb.HRM.config.HikvisionSyncProperties;
 import org.apache.commons.codec.binary.Hex;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import javax.net.ssl.HostnameVerifier;
