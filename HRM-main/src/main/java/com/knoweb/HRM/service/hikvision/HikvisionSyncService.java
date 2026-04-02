@@ -32,7 +32,7 @@ import java.util.UUID;
 @Service
 public class HikvisionSyncService {
 
-    private static final String SYNC_KEY = "hikvision-default";
+    private static final String SYNC_KEY_PREFIX = "hikvision-company-";
     private static final String EMPLOYEE_REF = "EMPLOYEE_REF";
     private static final String PERSON_NAME_REF = "PERSON_NAME_REF";
 
@@ -43,6 +43,7 @@ public class HikvisionSyncService {
     private final HikvisionIdentityMappingRepository identityMappingRepository;
     private final EmployeeRepository employeeRepository;
     private final AttendanceRepository attendanceRepository;
+    private final com.knoweb.HRM.repository.CompanyRepository companyRepository;
     private final ObjectMapper objectMapper;
 
     public HikvisionSyncService(HikvisionSyncProperties properties,
@@ -52,6 +53,7 @@ public class HikvisionSyncService {
                                 HikvisionIdentityMappingRepository identityMappingRepository,
                                 EmployeeRepository employeeRepository,
                                 AttendanceRepository attendanceRepository,
+                                com.knoweb.HRM.repository.CompanyRepository companyRepository,
                                 ObjectMapper objectMapper) {
         this.properties = properties;
         this.hikvisionDigestClient = hikvisionDigestClient;
@@ -60,6 +62,7 @@ public class HikvisionSyncService {
         this.identityMappingRepository = identityMappingRepository;
         this.employeeRepository = employeeRepository;
         this.attendanceRepository = attendanceRepository;
+        this.companyRepository = companyRepository;
         this.objectMapper = objectMapper;
     }
 
@@ -68,20 +71,34 @@ public class HikvisionSyncService {
         if (!properties.isEnabled()) {
             return;
         }
-        try {
-            syncNow();
-        } catch (Exception exception) {
-            HikvisionSyncState state = syncStateRepository.findById(SYNC_KEY).orElseGet(this::newState);
-            state.setLastStatus("ERROR");
-            state.setLastError(exception.getMessage());
-            syncStateRepository.save(state);
+        List<com.knoweb.HRM.model.Company> companies = companyRepository.findAll();
+        for (com.knoweb.HRM.model.Company company : companies) {
+            if (company.isHikvisionEnabled() && company.getHikvisionBaseUrl() != null && !company.getHikvisionBaseUrl().isBlank()) {
+                try {
+                    syncNow(company);
+                } catch (Exception exception) {
+                    String syncKey = SYNC_KEY_PREFIX + company.getId();
+                    HikvisionSyncState state = syncStateRepository.findById(syncKey).orElseGet(() -> newState(syncKey));
+                    state.setLastStatus("ERROR");
+                    state.setLastError(exception.getMessage());
+                    syncStateRepository.save(state);
+                }
+            }
         }
     }
 
     @Transactional
-    public HikvisionSyncResult syncNow() throws IOException {
-        HikvisionSyncState state = syncStateRepository.findById(SYNC_KEY).orElseGet(this::newState);
-        List<HikvisionEventRecord> events = fetchEvents(state);
+    public HikvisionSyncResult syncNow(com.knoweb.HRM.model.Company company) throws IOException {
+        String syncKey = SYNC_KEY_PREFIX + company.getId();
+        HikvisionSyncState state = syncStateRepository.findById(syncKey).orElseGet(() -> newState(syncKey));
+        
+        HikvisionDigestClient.DeviceConfig config = new HikvisionDigestClient.DeviceConfig(
+                company.getHikvisionBaseUrl(),
+                company.getHikvisionUsername(),
+                company.getHikvisionPassword()
+        );
+
+        List<HikvisionEventRecord> events = fetchEvents(state, config);
 
         HikvisionSyncResult result = new HikvisionSyncResult();
         result.setFetched(events.size());
@@ -130,8 +147,9 @@ public class HikvisionSyncService {
         return result;
     }
 
-    public HikvisionSyncState getStatus() {
-        return syncStateRepository.findById(SYNC_KEY).orElseGet(this::newState);
+    public HikvisionSyncState getStatus(long companyId) {
+        String syncKey = SYNC_KEY_PREFIX + companyId;
+        return syncStateRepository.findById(syncKey).orElseGet(() -> newState(syncKey));
     }
 
     public List<HikvisionUnresolvedEventDto> getUnresolvedEvents() {
@@ -177,15 +195,15 @@ public class HikvisionSyncService {
         return result;
     }
 
-    private HikvisionSyncState newState() {
+    private HikvisionSyncState newState(String syncKey) {
         HikvisionSyncState state = new HikvisionSyncState();
-        state.setSyncKey(SYNC_KEY);
+        state.setSyncKey(syncKey);
         state.setLastStatus("IDLE");
         state.setLastSerialNo(0);
         return state;
     }
 
-    private List<HikvisionEventRecord> fetchEvents(HikvisionSyncState state) throws IOException {
+    private List<HikvisionEventRecord> fetchEvents(HikvisionSyncState state, HikvisionDigestClient.DeviceConfig config) throws IOException {
         List<HikvisionEventRecord> records = new ArrayList<>();
         String searchId = UUID.randomUUID().toString().replace("-", "");
         int position = 0;
@@ -202,7 +220,7 @@ public class HikvisionSyncService {
                             .put("endTime", resolveEndTime())
                             .put("timeReverseOrder", true));
 
-            JsonNode response = hikvisionDigestClient.postJson("/ISAPI/AccessControl/AcsEvent?format=json", body);
+            JsonNode response = hikvisionDigestClient.postJson("/ISAPI/AccessControl/AcsEvent?format=json", body, config);
             JsonNode acsEvent = response.path("AcsEvent");
             JsonNode infoList = acsEvent.path("InfoList");
             if (!infoList.isArray() || infoList.isEmpty()) {

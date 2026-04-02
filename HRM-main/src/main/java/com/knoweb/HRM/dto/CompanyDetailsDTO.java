@@ -31,4 +31,12 @@ public class CompanyDetailsDTO {
     private String package_name;
 
     private String company_status;
+
+    private String hikvisionBaseUrl;
+
+    private String hikvisionUsername;
+
+    private String hikvisionPassword;
+
+    private boolean hikvisionEnabled;
 }

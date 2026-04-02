@@ -759,4 +759,18 @@ public class EmployeeService {
 
 
 
+
+    private void applyDeviceSyncResult(Employee employee, HikvisionProvisioningResult result) {
+        employee.setDeviceSyncStatus(result.getStatus());
+        employee.setDeviceSyncError(result.getError());
+        employee.setDeviceSyncAt(LocalDateTime.now());
+        employeeRepository.save(employee);
+    }
+
+    private EmpDetailsDTO withDeviceSync(EmpDetailsDTO dto, Employee employee) {
+        dto.setDeviceSyncStatus(employee.getDeviceSyncStatus());
+        dto.setDeviceSyncError(employee.getDeviceSyncError());
+        dto.setDeviceSyncAt(employee.getDeviceSyncAt());
+        return dto;
+    }
 }

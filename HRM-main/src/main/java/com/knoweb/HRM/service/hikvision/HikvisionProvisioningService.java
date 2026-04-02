@@ -29,15 +29,18 @@ public class HikvisionProvisioningService {
     private final HikvisionSyncProperties properties;
     private final HikvisionDigestClient hikvisionDigestClient;
     private final HikvisionIdentityMappingRepository identityMappingRepository;
+    private final com.knoweb.HRM.repository.CompanyRepository companyRepository;
     private final ObjectMapper objectMapper;
 
     public HikvisionProvisioningService(HikvisionSyncProperties properties,
                                         HikvisionDigestClient hikvisionDigestClient,
                                         HikvisionIdentityMappingRepository identityMappingRepository,
+                                        com.knoweb.HRM.repository.CompanyRepository companyRepository,
                                         ObjectMapper objectMapper) {
         this.properties = properties;
         this.hikvisionDigestClient = hikvisionDigestClient;
         this.identityMappingRepository = identityMappingRepository;
+        this.companyRepository = companyRepository;
         this.objectMapper = objectMapper;
     }
 
@@ -53,14 +56,24 @@ public class HikvisionProvisioningService {
         seedMapping(EMPLOYEE_REF, employeeCode, employee.getId());
         seedMapping(PERSON_NAME_REF, displayName, employee.getId());
 
-        if (!properties.isEnabled()) {
-            return HikvisionProvisioningResult.pending("Hikvision sync is disabled");
+        com.knoweb.HRM.model.Company company = companyRepository.findById(employee.getCmpId()).orElse(null);
+        if (company == null || !company.isHikvisionEnabled()) {
+            return HikvisionProvisioningResult.pending("Hikvision sync is disabled for this company");
+        }
+
+        if (company.getHikvisionBaseUrl() == null || company.getHikvisionBaseUrl().isBlank()) {
+            return HikvisionProvisioningResult.failed("Hikvision base URL not configured for this company");
         }
 
         try {
             JsonNode payload = buildUserPayload(employee, employeeCode, displayName);
-            hikvisionDigestClient.putJson("/ISAPI/AccessControl/UserInfo/SetUp?format=json", payload);
-            log.info("Synced employee {} to Hikvision device with code {}", employee.getId(), employeeCode);
+            HikvisionDigestClient.DeviceConfig config = new HikvisionDigestClient.DeviceConfig(
+                    company.getHikvisionBaseUrl(),
+                    company.getHikvisionUsername(),
+                    company.getHikvisionPassword()
+            );
+            hikvisionDigestClient.putJson("/ISAPI/AccessControl/UserInfo/SetUp?format=json", payload, config);
+            log.info("Synced employee {} to Hikvision device for company {} with code {}", employee.getId(), company.getId(), employeeCode);
             return HikvisionProvisioningResult.synced();
         } catch (Exception exception) {
             log.warn("Failed to sync employee {} to Hikvision device: {}", employee.getId(), exception.getMessage());

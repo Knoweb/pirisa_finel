@@ -89,4 +89,16 @@ public class Company implements Serializable {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cmp_id", referencedColumnName = "cmp_id", insertable = false, updatable = false)
     private CompanyOTDetails companyOTDetails;
+
+    @Column(name = "hikvision_base_url")
+    private String hikvisionBaseUrl;
+
+    @Column(name = "hikvision_username")
+    private String hikvisionUsername;
+
+    @Column(name = "hikvision_password")
+    private String hikvisionPassword;
+
+    @Column(name = "hikvision_enabled")
+    private boolean hikvisionEnabled;
 }

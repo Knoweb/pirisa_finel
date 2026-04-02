@@ -19,6 +19,10 @@ interface CompanyDetails {
   cmp_reg_no?: string;
   tin_no?: string;
   vat_no?: string;
+  hikvisionBaseUrl?: string;
+  hikvisionUsername?: string;
+  hikvisionPassword?: string;
+  hikvisionEnabled?: boolean;
 }
 
 const CompanySettings = () => {
@@ -37,6 +41,10 @@ const CompanySettings = () => {
     cmp_reg_no: "",
     tin_no: "",
     vat_no: "",
+    hikvisionBaseUrl: "",
+    hikvisionUsername: "",
+    hikvisionPassword: "",
+    hikvisionEnabled: false,
   });
 
   const [logoFile, setLogoFile] = useState<File | null>(null);
@@ -80,6 +88,10 @@ const CompanySettings = () => {
             cmp_reg_no: companyDetails.cmp_reg_no || "",
             tin_no: companyDetails.tin_no || "",
             vat_no: companyDetails.vat_no || "",
+            hikvisionBaseUrl: companyDetails.hikvisionBaseUrl || "",
+            hikvisionUsername: companyDetails.hikvisionUsername || "",
+            hikvisionPassword: companyDetails.hikvisionPassword || "",
+            hikvisionEnabled: companyDetails.hikvisionEnabled || false,
           });
         }
 
@@ -363,7 +375,65 @@ const CompanySettings = () => {
                 className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
               />
             </div>
-            <div className="sm:col-span-2">
+
+            {/* Biometric Sync Settings Section */}
+            <div className="sm:col-span-2 pt-6 border-t border-gray-200 mt-4">
+              <h3 className="text-lg font-medium text-gray-900 mb-4">Biometric Sync (Hikvision)</h3>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="sm:col-span-2 flex items-center gap-3 mb-2">
+                  <input
+                    type="checkbox"
+                    id="hikvisionEnabled"
+                    name="hikvisionEnabled"
+                    checked={formData.hikvisionEnabled}
+                    onChange={(e) => setFormData(prev => ({ ...prev, hikvisionEnabled: e.target.checked }))}
+                    className="w-5 h-5 text-sky-500 rounded focus:ring-sky-500"
+                  />
+                  <label htmlFor="hikvisionEnabled" className="text-gray-700 font-medium cursor-pointer">
+                    Enable Biometric Attendance Sync
+                  </label>
+                </div>
+                
+                {formData.hikvisionEnabled && (
+                  <>
+                    <div className="sm:col-span-2">
+                      <label className="text-gray-500 text-sm mb-1">Device Base URL (Public IP/VPN URL)</label>
+                      <input
+                        type="text"
+                        name="hikvisionBaseUrl"
+                        placeholder="http://123.45.67.89:8080"
+                        value={formData.hikvisionBaseUrl}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      />
+                      <p className="text-xs text-gray-400 mt-1">Example: http://[your-office-ip]:[port]</p>
+                    </div>
+                    <div>
+                      <label className="text-gray-500 text-sm mb-1">Device Username</label>
+                      <input
+                        type="text"
+                        name="hikvisionUsername"
+                        value={formData.hikvisionUsername}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      />
+                    </div>
+                    <div>
+                      <label className="text-gray-500 text-sm mb-1">Device Password</label>
+                      <input
+                        type="password"
+                        name="hikvisionPassword"
+                        value={formData.hikvisionPassword}
+                        onChange={handleInputChange}
+                        className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      />
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
+
+            <div className="sm:col-span-2 pt-6">
               <button
                 type="submit"
                 className="bg-sky-500 text-white px-6 py-2 rounded-lg hover:bg-sky-600 transition"

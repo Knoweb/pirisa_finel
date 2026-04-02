@@ -30,6 +30,15 @@ import java.util.UUID;
 @Component
 public class HikvisionDigestClient {
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class DeviceConfig {
+        private String baseUrl;
+        private String username;
+        private String password;
+    }
+
     private final HikvisionSyncProperties properties;
     private final ObjectMapper objectMapper;
 
@@ -38,17 +47,17 @@ public class HikvisionDigestClient {
         this.objectMapper = objectMapper;
     }
 
-    public JsonNode postJson(String path, JsonNode body) throws IOException {
-        return sendJson("POST", path, body);
+    public JsonNode postJson(String path, JsonNode body, DeviceConfig config) throws IOException {
+        return sendJson("POST", path, body, config);
     }
 
-    public JsonNode putJson(String path, JsonNode body) throws IOException {
-        return sendJson("PUT", path, body);
+    public JsonNode putJson(String path, JsonNode body, DeviceConfig config) throws IOException {
+        return sendJson("PUT", path, body, config);
     }
 
-    private JsonNode sendJson(String method, String path, JsonNode body) throws IOException {
+    private JsonNode sendJson(String method, String path, JsonNode body, DeviceConfig config) throws IOException {
         String requestBody = objectMapper.writeValueAsString(body);
-        URI uri = URI.create(normalizeBaseUrl() + path);
+        URI uri = URI.create(normalizeBaseUrl(config.getBaseUrl()) + path);
         
         // Correct Content-Type for JSON payloads
         String contentType = "application/json; charset=UTF-8";
@@ -75,7 +84,7 @@ public class HikvisionDigestClient {
         HttpURLConnection authorized = openConnection(uri.toURL(), method);
         authorized.setRequestProperty("Content-Type", contentType);
         authorized.setRequestProperty("Accept", "application/json");
-        authorized.setRequestProperty("Authorization", buildDigestHeader(challenge, uri, method));
+        authorized.setRequestProperty("Authorization", buildDigestHeader(challenge, uri, method, config));
         authorized.setDoOutput(true);
         writeRequestBody(authorized, requestBody);
 
@@ -88,13 +97,13 @@ public class HikvisionDigestClient {
         return parseResponseBody(readResponseBody(authorized));
     }
 
-    private String normalizeBaseUrl() {
-        if (properties.getBaseUrl() == null || properties.getBaseUrl().isBlank()) {
-            throw new IllegalStateException("hikvision.sync.base-url is required");
+    private String normalizeBaseUrl(String baseUrl) {
+        if (baseUrl == null || baseUrl.isBlank()) {
+            throw new IllegalStateException("Hikvision base-url is required for this company");
         }
-        return properties.getBaseUrl().endsWith("/") ?
-                properties.getBaseUrl().substring(0, properties.getBaseUrl().length() - 1) :
-                properties.getBaseUrl();
+        return baseUrl.endsWith("/") ?
+                baseUrl.substring(0, baseUrl.length() - 1) :
+                baseUrl;
     }
 
     private HttpURLConnection openConnection(URL url, String method) throws IOException {
@@ -177,7 +186,7 @@ public class HikvisionDigestClient {
         return result;
     }
 
-    private String buildDigestHeader(Map<String, String> challenge, URI uri, String method) throws IOException {
+    private String buildDigestHeader(Map<String, String> challenge, URI uri, String method, DeviceConfig config) throws IOException {
         String realm = challenge.get("realm");
         String nonce = challenge.get("nonce");
         String qop = challenge.getOrDefault("qop", "auth");
@@ -190,12 +199,12 @@ public class HikvisionDigestClient {
         String nc = "00000001";
         String digestUri = uri.getRawPath() + (uri.getRawQuery() != null ? "?" + uri.getRawQuery() : "");
 
-        String ha1 = digest(algorithm, properties.getUsername() + ":" + realm + ":" + properties.getPassword());
+        String ha1 = digest(algorithm, config.getUsername() + ":" + realm + ":" + config.getPassword());
         String ha2 = digest(algorithm, method + ":" + digestUri);
         String response = digest(algorithm, ha1 + ":" + nonce + ":" + nc + ":" + cnonce + ":" + qop + ":" + ha2);
 
         StringBuilder header = new StringBuilder("Digest ");
-        header.append("username=\"").append(properties.getUsername()).append("\", ");
+        header.append("username=\"").append(config.getUsername()).append("\", ");
         header.append("realm=\"").append(realm).append("\", ");
         header.append("nonce=\"").append(nonce).append("\", ");
         header.append("uri=\"").append(digestUri).append("\", ");

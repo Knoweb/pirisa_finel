@@ -29,18 +29,21 @@ public class HikvisionSyncController {
     private final HikvisionSyncService hikvisionSyncService;
     private final HikvisionProvisioningService hikvisionProvisioningService;
     private final EmployeeRepository employeeRepository;
+    private final com.knoweb.HRM.repository.CompanyRepository companyRepository;
 
     public HikvisionSyncController(HikvisionSyncService hikvisionSyncService,
                                    HikvisionProvisioningService hikvisionProvisioningService,
-                                   EmployeeRepository employeeRepository) {
+                                   EmployeeRepository employeeRepository,
+                                   com.knoweb.HRM.repository.CompanyRepository companyRepository) {
         this.hikvisionSyncService = hikvisionSyncService;
         this.hikvisionProvisioningService = hikvisionProvisioningService;
         this.employeeRepository = employeeRepository;
+        this.companyRepository = companyRepository;
     }
 
-    @GetMapping("/status")
-    public ResponseEntity<HikvisionSyncState> status() {
-        return ResponseEntity.ok(hikvisionSyncService.getStatus());
+    @GetMapping("/status/{companyId}")
+    public ResponseEntity<HikvisionSyncState> status(@PathVariable long companyId) {
+        return ResponseEntity.ok(hikvisionSyncService.getStatus(companyId));
     }
 
     @GetMapping("/unresolved-events")
@@ -48,12 +51,14 @@ public class HikvisionSyncController {
         return ResponseEntity.ok(hikvisionSyncService.getUnresolvedEvents());
     }
 
-    @PostMapping("/sync-now")
-    public ResponseEntity<?> syncNow() throws IOException {
-        HikvisionSyncResult result = hikvisionSyncService.syncNow();
+    @PostMapping("/sync-now/{companyId}")
+    public ResponseEntity<?> syncNow(@PathVariable long companyId) throws IOException {
+        com.knoweb.HRM.model.Company company = companyRepository.findById(companyId)
+                .orElseThrow(() -> new IllegalArgumentException("Company not found"));
+        HikvisionSyncResult result = hikvisionSyncService.syncNow(company);
         Map<String, Object> response = new HashMap<>();
         response.put("resultCode", 100);
-        response.put("resultDesc", "Hikvision sync completed");
+        response.put("resultDesc", "Hikvision sync completed for company: " + company.getCmp_name());
         response.put("details", result);
         return ResponseEntity.ok(response);
     }

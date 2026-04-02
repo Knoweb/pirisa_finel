@@ -45,6 +45,12 @@ public class CompanyService {
             company.setVat_no(updateCompany.getVat_no());
             company.setPackage_name(updateCompany.getPackage_name());
             company.setCompany_status(updateCompany.getCompany_status());
+            
+            company.setHikvisionBaseUrl(updateCompany.getHikvisionBaseUrl());
+            company.setHikvisionUsername(updateCompany.getHikvisionUsername());
+            company.setHikvisionPassword(updateCompany.getHikvisionPassword());
+            company.setHikvisionEnabled(updateCompany.isHikvisionEnabled());
+            
             return companyRepository.save(company);
         }
         return null;
@@ -71,7 +77,11 @@ public class CompanyService {
                         company.getTin_no(),
                         company.getRole(),
                         company.getPackage_name(),
-                        company.getCompany_status()
+                        company.getCompany_status(),
+                        company.getHikvisionBaseUrl(),
+                        company.getHikvisionUsername(),
+                        company.getHikvisionPassword(),
+                        company.isHikvisionEnabled()
                 )))
                 .orElse(Collections.emptyList());
     }
