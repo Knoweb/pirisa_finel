@@ -38,5 +38,5 @@ public class CompanyDetailsDTO {
 
     private String hikvisionPassword;
 
-    private boolean hikvisionEnabled;
+    private Boolean hikvisionEnabled;
 }

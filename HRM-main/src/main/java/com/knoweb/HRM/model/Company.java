@@ -99,6 +99,11 @@ public class Company implements Serializable {
     @Column(name = "hikvision_password")
     private String hikvisionPassword;
 
-    @Column(name = "hikvision_enabled")
-    private boolean hikvisionEnabled;
+    @Column(name = "hikvision_enabled", columnDefinition = "boolean default false")
+    private Boolean hikvisionEnabled = false;
+
+    // Provide the is-method explicitly so we don't break existing Lombok calls
+    public Boolean isHikvisionEnabled() {
+        return hikvisionEnabled != null ? hikvisionEnabled : false;
+    }
 }
