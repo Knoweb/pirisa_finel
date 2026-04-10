@@ -89,6 +89,11 @@ export const navItems: NavItem[] = [
         id: "payslips", 
         path: "/payrole/payslips/:employeeId", 
         label: "Pay Slips" 
+      },
+      { 
+        id: "advanceRequests", 
+        path: "/payrole/advanceRequests", 
+        label: "Advance Requests" 
       }
     ],
   },
@@ -164,6 +169,14 @@ export const navItems: NavItem[] = [
   icon: FaDollarSign,
   roles : ["EMPLOYEE"],
   subItems:[]
+},
+{
+  id: "emp-salary-advance",
+  path: "/emp-salary-advance",
+  label: "Salary Advance",
+  icon: FaDollarSign,
+  roles: ["EMPLOYEE"],
+  subItems: []
 },
 {
   id: "emp-leave",

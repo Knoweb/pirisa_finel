@@ -29,6 +29,8 @@ import EmployeeDashboard from "./pages/Employee/EmployeeDashboard";
 import PayroleList from "./pages/Employee/PayroleList";
 import EmployeeLeave from "./pages/Employee/EmployeeLeave";
 import MonthlyCalendarPage from "./pages/Attendance/MonthlyCalendarPage";
+import EmpSalaryAdvance from "./pages/Employee/EmpSalaryAdvance";
+import AdvanceRequests from "./pages/PayRole/AdvanceRequests";
 
 // import Dashboard from "./pages/Dashboard";
 
@@ -50,6 +52,8 @@ function App() {
 
                 <Route index element={<Navigate to="/pay-role-list" replace />} />
                 <Route path="pay-role-list" element={<PayroleList />} />
+
+                <Route path="emp-salary-advance" element={<EmpSalaryAdvance />} />
 
                 <Route index element={<Navigate to="/emp-leave" replace />} />
                 <Route path="emp-leave" element={<EmployeeLeave />} />
@@ -74,6 +78,7 @@ function App() {
                     path="makesalary/:employeeId"
                     element={<SalaryMakePage />}
                   />
+                  <Route path="advanceRequests" element={<AdvanceRequests />} />
                   <Route path="payslips/:employeeId" element={<Invoice />} />
                 </Route>
                 <Route path="leave">
