@@ -35,6 +35,13 @@ public class SalaryAdvanceService {
     }
 
     public List<SalaryAdvanceDto> getByStatusAndCmpId(String status, Long cmpId) {
+        if (status == null || status.isEmpty() || status.equalsIgnoreCase("ALL")) {
+             if (cmpId == null) {
+                  return salaryAdvanceRepository.findAll().stream().map(this::toDto).collect(Collectors.toList());
+             }
+             return salaryAdvanceRepository.findByCmpId(cmpId).stream().map(this::toDto).collect(Collectors.toList());
+        }
+
         if (cmpId == null) {
             return salaryAdvanceRepository.findByStatus(status)
                     .stream().map(this::toDto).collect(Collectors.toList());

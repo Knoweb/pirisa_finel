@@ -27,14 +27,11 @@ public class SalaryAdvanceController {
     }
 
     @GetMapping
-    public ResponseEntity<List<SalaryAdvanceDto>> getAdvancesByStatus(
-            @RequestParam(required = false, defaultValue = "PENDING") String status,
+    public ResponseEntity<List<SalaryAdvanceDto>> getAdvances(
+            @RequestParam(required = false, defaultValue = "ALL") String status,
             @RequestParam(required = false) Long cmpId) {
         
-        if (cmpId != null) {
-            return ResponseEntity.ok(salaryAdvanceService.getByStatusAndCmpId(status, cmpId));
-        }
-        return ResponseEntity.ok(salaryAdvanceService.getByStatus(status));
+        return ResponseEntity.ok(salaryAdvanceService.getByStatusAndCmpId(status, cmpId));
     }
 
     @PutMapping("/{id}/status")

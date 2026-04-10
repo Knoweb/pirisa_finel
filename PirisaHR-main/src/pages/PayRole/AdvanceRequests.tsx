@@ -29,7 +29,8 @@ const AdvanceRequests = () => {
       setLoading(true);
       const cmpId = localStorage.getItem("cmpnyId");
       
-      let url = "/api/advances?status=PENDING";
+      // Fetch all requests
+      let url = "/api/advances?status=ALL";
       if (cmpId) {
         url += `&cmpId=${cmpId}`;
       }
@@ -80,11 +81,22 @@ const AdvanceRequests = () => {
     }
   };
 
+  const getStatusBadge = (status: string) => {
+    switch (status) {
+      case "APPROVED":
+        return <span className="px-2 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-semibold border border-green-200">APPROVED</span>;
+      case "REJECTED":
+        return <span className="px-2 py-1 bg-red-100 text-red-700 rounded-lg text-xs font-semibold border border-red-200">REJECTED</span>;
+      default:
+        return <span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded-lg text-xs font-semibold border border-yellow-200">PENDING</span>;
+    }
+  };
+
   return (
     <div className="p-6 max-w-7xl mx-auto min-h-screen">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-800">Pending Salary Advances</h1>
-        <p className="text-gray-500 mt-1">Review and manage employee advance requests</p>
+        <h1 className="text-2xl font-bold text-gray-800">Salary Advances</h1>
+        <p className="text-gray-500 mt-1">Review and manage all employee advance requests</p>
       </div>
 
       {loading ? (
@@ -100,14 +112,15 @@ const AdvanceRequests = () => {
                   <th className="p-4">Amount (LKR)</th>
                   <th className="p-4">Deduction Month</th>
                   <th className="p-4">Remarks</th>
+                  <th className="p-4">Status</th>
                   <th className="p-4 text-center">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
                 {requests.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="p-8 text-center text-gray-500">
-                      No pending advance requests found.
+                    <td colSpan={7} className="p-8 text-center text-gray-500">
+                      No advance requests found.
                     </td>
                   </tr>
                 ) : (
@@ -123,21 +136,30 @@ const AdvanceRequests = () => {
                       <td className="p-4 text-sm text-gray-600">{req.repaymentDeductionMonth}</td>
                       <td className="p-4 text-sm text-gray-600 max-w-xs">{req.remarks || '-'}</td>
                       <td className="p-4">
+                        {getStatusBadge(req.status)}
+                      </td>
+                      <td className="p-4">
                         <div className="flex justify-center gap-2">
-                          <button
-                            onClick={() => handleAction(req.id, "APPROVED")}
-                            title="Approve"
-                            className="bg-green-100 text-green-700 p-2 rounded-lg hover:bg-green-200 transition-colors shadow-sm"
-                          >
-                            <Check size={18} />
-                          </button>
-                          <button
-                            onClick={() => handleAction(req.id, "REJECTED")}
-                            title="Reject"
-                            className="bg-red-100 text-red-700 p-2 rounded-lg hover:bg-red-200 transition-colors shadow-sm"
-                          >
-                            <X size={18} />
-                          </button>
+                          {req.status === "PENDING" ? (
+                            <>
+                              <button
+                                onClick={() => handleAction(req.id, "APPROVED")}
+                                title="Approve"
+                                className="bg-green-100 text-green-700 p-2 rounded-lg hover:bg-green-200 transition-colors shadow-sm"
+                              >
+                                <Check size={18} />
+                              </button>
+                              <button
+                                onClick={() => handleAction(req.id, "REJECTED")}
+                                title="Reject"
+                                className="bg-red-100 text-red-700 p-2 rounded-lg hover:bg-red-200 transition-colors shadow-sm"
+                              >
+                                <X size={18} />
+                              </button>
+                            </>
+                          ) : (
+                            <span className="text-gray-400 text-xs font-semibold">PROCESSED</span>
+                          )}
                         </div>
                       </td>
                     </tr>
