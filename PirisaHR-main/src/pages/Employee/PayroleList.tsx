@@ -21,6 +21,7 @@ interface PayrollItem {
   total_deductions: number;
   net_salary: number;
   basic_salary: number;
+  advance_deduction?: number;
 }
 
 interface EmployeePayrollData {
@@ -171,6 +172,9 @@ const PayroleList = () => {
       { description: "EPF (8%)", amount: payroll.epf_8 },
       { description: "APIT", amount: payroll.appit },
       { description: "Loan", amount: payroll.loan },
+      ...(payroll.advance_deduction && payroll.advance_deduction > 0
+        ? [{ description: "Salary Advance", amount: payroll.advance_deduction }]
+        : []),
       { description: "Other Deductions", amount: payroll.other_deductions },
       { description: "Total Deductions", amount: payroll.total_deductions },
     ];
@@ -583,6 +587,18 @@ const PayroleList = () => {
                       })}
                     </span>
                   </div>
+                  {selectedPayroll.advance_deduction !== undefined && selectedPayroll.advance_deduction > 0 && (
+                    <div className="flex justify-between text-red-600 font-medium">
+                      <span>Salary Advance</span>
+                      <span>
+                        {selectedPayroll.advance_deduction.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "LKR",
+                          minimumFractionDigits: 2,
+                        })}
+                      </span>
+                    </div>
+                  )}
                   <div className="flex justify-between">
                     <span>Other Deductions</span>
                     <span>
