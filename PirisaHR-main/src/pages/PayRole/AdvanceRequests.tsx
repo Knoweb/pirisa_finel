@@ -18,6 +18,7 @@ interface AdvanceRequest {
 const AdvanceRequests = () => {
   const [requests, setRequests] = useState<AdvanceRequest[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState<"PENDING" | "APPROVED" | "REJECTED">("PENDING");
   const token = localStorage.getItem("token") || "";
 
   useEffect(() => {
@@ -92,11 +93,32 @@ const AdvanceRequests = () => {
     }
   };
 
+  const filteredRequests = requests.filter(req => req.status === activeTab);
+
   return (
     <div className="p-6 max-w-7xl mx-auto min-h-screen">
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-gray-800">Salary Advances</h1>
         <p className="text-gray-500 mt-1">Review and manage all employee advance requests</p>
+      </div>
+
+      {/* Tabs Navigation */}
+      <div className="border-b border-gray-200 mb-6">
+        <nav className="-mb-px flex space-x-8">
+          {(["PENDING", "APPROVED", "REJECTED"] as const).map((tab) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`${
+                activeTab === tab
+                  ? "border-blue-500 text-blue-600"
+                  : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"
+              } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors`}
+            >
+              {tab.charAt(0) + tab.slice(1).toLowerCase()} Advances
+            </button>
+          ))}
+        </nav>
       </div>
 
       {loading ? (
@@ -117,14 +139,14 @@ const AdvanceRequests = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
-                {requests.length === 0 ? (
+                {filteredRequests.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="p-8 text-center text-gray-500">
-                      No advance requests found.
+                      No {activeTab.toLowerCase()} advance requests found.
                     </td>
                   </tr>
                 ) : (
-                  requests.map((req) => (
+                  filteredRequests.map((req) => (
                     <tr key={req.id} className="hover:bg-gray-50 transition-colors">
                       <td className="p-4 font-medium text-gray-800">{req.employeeId}</td>
                       <td className="p-4 text-sm text-gray-700">
