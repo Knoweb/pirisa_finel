@@ -26,6 +26,8 @@ public class PayroleDTO {
     private float loan;
 
     private float other_deductions;
+    
+    private float advance_deduction;
 
     private float epf_8;
 

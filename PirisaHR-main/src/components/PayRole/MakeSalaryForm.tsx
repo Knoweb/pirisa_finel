@@ -106,6 +106,7 @@ const SalaryForm: React.FC = () => {
   const [appit, setAppit] = useState("0");
   const [loan, setLoan] = useState("0");
   const [other_deductions, setOther_deductions] = useState("0");
+  const [salary_advance, setSalary_advance] = useState("0"); // Added state for Salary Advance
 
   // Allowance state
   const [allowances, setAllowances] = useState<Allowance[]>([]);
@@ -193,7 +194,7 @@ const SalaryForm: React.FC = () => {
     selectedBonuses.reduce((sum, bonus) => sum + Number(bonus.amount), 0);
 
   const total_deductions =
-    epf_8 + Number(appit) + Number(loan) + Number(other_deductions);
+    epf_8 + Number(appit) + Number(loan) + Number(other_deductions) + Number(salary_advance);
 
   const net_salary = total_earnings - total_deductions;
 
@@ -361,6 +362,42 @@ const SalaryForm: React.FC = () => {
 
     fetchCompanyOTSettings();
   }, []);
+
+  // Auto-deduct Salary Advances for the current month and employee
+  useEffect(() => {
+    const fetchApprovedAdvances = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const companyId = localStorage.getItem("cmpnyId");
+
+        // Format selected month-year to YYYY-MM
+        const monthNum = new Date(Date.parse(`${month} 1, ${year}`)).getMonth() + 1;
+        const currentSelectedMonth = `${year}-${monthNum.toString().padStart(2, "0")}`;
+
+        if (!token || !companyId || !employeeId) return;
+
+        const res = await fetch(`/api/advances/employee/${employeeId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (res.ok) {
+          const advances: any[] = await res.json();
+          // Filter for APPROVED and matching the Repayment Month
+          const totalAdvanceDeduction = advances
+            .filter((adv) => adv.status === "APPROVED" && adv.repaymentDeductionMonth === currentSelectedMonth)
+            .reduce((sum, adv) => sum + Number(adv.amountRequested), 0);
+
+          setSalary_advance(totalAdvanceDeduction.toString());
+        }
+      } catch (err) {
+        console.error("Error fetching salary advances:", err);
+      }
+    };
+
+    fetchApprovedAdvances();
+  }, [employeeId, month, year]);
 
   // Fetch attendance data when overtime modal opens
   useEffect(() => {
@@ -1076,6 +1113,7 @@ const SalaryForm: React.FC = () => {
         appit: parseFloat(appit) || 0,
         loan: parseFloat(loan) || 0,
         other_deductions: parseFloat(other_deductions) || 0,
+        advance_deduction: parseFloat(salary_advance) || 0,
         epf_8: epf_8,
         total_earnings: total_earnings,
         total_deductions: total_deductions,
@@ -1545,6 +1583,23 @@ const SalaryForm: React.FC = () => {
                 value={`Rs. ${epf_8.toFixed(2)}`}
                 readOnly
               />
+            </div>
+
+            <div>
+              <label className="block mb-1 text-sm text-blue-700 font-semibold">Salary Advance</label>
+              <div className="relative">
+                <span className="absolute inset-y-0 left-0 pl-2 flex items-center text-gray-500 pointer-events-none">
+                  Rs.
+                </span>
+                <input
+                  type="text"
+                  className="w-full p-2 pl-8 bg-blue-50 border border-blue-200 rounded font-medium text-blue-800"
+                  placeholder="00"
+                  value={salary_advance}
+                  readOnly
+                />
+              </div>
+              <p className="text-xs text-gray-500 mt-1 italic">Auto-deducted from approved advances</p>
             </div>
 
             <div>

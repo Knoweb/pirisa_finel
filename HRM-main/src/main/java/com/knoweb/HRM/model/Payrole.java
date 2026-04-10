@@ -38,6 +38,9 @@ public class Payrole implements Serializable {
     private float loan;
 
     private float other_deductions;
+    
+    @Column(name = "advance_deduction", nullable = true, columnDefinition = "float default 0.0")
+    private float advance_deduction;
 
     private float epf_8;
 
