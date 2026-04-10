@@ -35,7 +35,7 @@ const EmpSalaryAdvance = () => {
     if (!empId) return;
     try {
       setLoading(true);
-      const res = await fetch(`/api/v1/hr/advances/employee/${empId}`, {
+      const res = await fetch(`/api/advances/employee/${empId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -69,7 +69,7 @@ const EmpSalaryAdvance = () => {
         remarks: formData.remarks,
       };
 
-      const res = await fetch("/api/v1/hr/advances", {
+      const res = await fetch("/api/advances", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

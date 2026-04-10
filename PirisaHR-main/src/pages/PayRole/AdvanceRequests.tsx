@@ -27,7 +27,7 @@ const AdvanceRequests = () => {
   const fetchPendingRequests = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/v1/hr/advances?status=PENDING", {
+      const res = await fetch("/api/advances?status=PENDING", {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -52,7 +52,7 @@ const AdvanceRequests = () => {
       const adminId = localStorage.getItem("empId") || "Admin"; 
       
       const res = await fetch(
-        `/api/v1/hr/advances/${id}/status?status=${status}&approvedBy=${adminId}`,
+        `/api/advances/${id}/status?status=${status}&approvedBy=${adminId}`,
         {
           method: "PUT",
           headers: {
