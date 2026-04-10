@@ -54,7 +54,7 @@ const EmpSalaryAdvance = () => {
     }
   };
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.amountRequested || !formData.repaymentDeductionMonth) {
       toast.warning("Please fill all required fields.");
