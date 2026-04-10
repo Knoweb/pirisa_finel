@@ -15,6 +15,7 @@ interface PayslipDetail {
   appit: number;
   loan: number;
   other_deductions: number;
+  advance_deduction?: number;
   epf_8: number;
   total_earnings: number;
   total_deductions: number;
@@ -340,6 +341,12 @@ const PayslipModal: React.FC<PayslipModalProps> = ({
                 <span>Loans</span>
                 <span>Rs. {payslip.loan.toLocaleString()}</span>
               </div>
+              {payslip.advance_deduction !== undefined && payslip.advance_deduction > 0 && (
+                <div className="flex justify-between text-red-600 font-medium">
+                  <span>Salary Advance Deduction</span>
+                  <span>Rs. {payslip.advance_deduction.toLocaleString()}</span>
+                </div>
+              )}
               <div className="flex justify-between">
                 <span>Other Deductions</span>
                 <span>Rs. {payslip.other_deductions.toLocaleString()}</span>
