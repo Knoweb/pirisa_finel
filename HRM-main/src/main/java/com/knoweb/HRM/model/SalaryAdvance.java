@@ -40,6 +40,9 @@ public class SalaryAdvance implements Serializable {
     @Column(name = "status", nullable = false)
     private String status; // PENDING, APPROVED, REJECTED
 
+    @Column(name = "cmp_id", nullable = true)
+    private Long cmpId;
+
     @Column(name = "remarks", length = 500)
     private String remarks;
 

@@ -34,6 +34,15 @@ public class SalaryAdvanceService {
                 .stream().map(this::toDto).collect(Collectors.toList());
     }
 
+    public List<SalaryAdvanceDto> getByStatusAndCmpId(String status, Long cmpId) {
+        if (cmpId == null) {
+            return salaryAdvanceRepository.findByStatus(status)
+                    .stream().map(this::toDto).collect(Collectors.toList());
+        }
+        return salaryAdvanceRepository.findByStatusAndCmpId(status, cmpId)
+                .stream().map(this::toDto).collect(Collectors.toList());
+    }
+
     public List<SalaryAdvanceDto> getByStatus(String status) {
         return salaryAdvanceRepository.findByStatus(status)
                 .stream().map(this::toDto).collect(Collectors.toList());

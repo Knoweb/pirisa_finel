@@ -28,7 +28,12 @@ public class SalaryAdvanceController {
 
     @GetMapping
     public ResponseEntity<List<SalaryAdvanceDto>> getAdvancesByStatus(
-            @RequestParam(required = false, defaultValue = "PENDING") String status) {
+            @RequestParam(required = false, defaultValue = "PENDING") String status,
+            @RequestParam(required = false) Long cmpId) {
+        
+        if (cmpId != null) {
+            return ResponseEntity.ok(salaryAdvanceService.getByStatusAndCmpId(status, cmpId));
+        }
         return ResponseEntity.ok(salaryAdvanceService.getByStatus(status));
     }
 

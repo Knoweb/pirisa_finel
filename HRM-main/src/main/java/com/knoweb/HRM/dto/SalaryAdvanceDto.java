@@ -20,6 +20,7 @@ public class SalaryAdvanceDto {
     private String approvedBy;
     private String repaymentDeductionMonth;
     private String status;
+    private Long cmpId;
     private String remarks;
 
 }

@@ -11,6 +11,8 @@ public interface SalaryAdvanceRepository extends JpaRepository<SalaryAdvance, Lo
 
     List<SalaryAdvance> findByEmployeeId(String employeeId);
 
+    List<SalaryAdvance> findByStatusAndCmpId(String status, Long cmpId);
+    
     List<SalaryAdvance> findByStatus(String status);
     
     List<SalaryAdvance> findByRepaymentDeductionMonthAndStatus(String month, String status);

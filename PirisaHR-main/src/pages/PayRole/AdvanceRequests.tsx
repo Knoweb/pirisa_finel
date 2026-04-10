@@ -27,7 +27,14 @@ const AdvanceRequests = () => {
   const fetchPendingRequests = async () => {
     try {
       setLoading(true);
-      const res = await fetch("/api/advances?status=PENDING", {
+      const cmpId = localStorage.getItem("cmpnyId");
+      
+      let url = "/api/advances?status=PENDING";
+      if (cmpId) {
+        url += `&cmpId=${cmpId}`;
+      }
+
+      const res = await fetch(url, {
         headers: {
           Authorization: `Bearer ${token}`
         }

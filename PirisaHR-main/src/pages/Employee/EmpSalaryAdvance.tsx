@@ -62,11 +62,14 @@ const EmpSalaryAdvance = () => {
     }
 
     try {
+      const cmpId = localStorage.getItem("cmpnyId");
+      
       const payload = {
         employeeId: empId,
         amountRequested: parseFloat(formData.amountRequested),
         repaymentDeductionMonth: formData.repaymentDeductionMonth,
         remarks: formData.remarks,
+        cmpId: cmpId ? parseInt(cmpId) : null,
       };
 
       const res = await fetch("/api/advances", {
