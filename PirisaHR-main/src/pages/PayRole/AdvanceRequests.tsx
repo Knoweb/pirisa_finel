@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
@@ -23,6 +22,7 @@ const AdvanceRequests = () => {
 
   useEffect(() => {
     fetchPendingRequests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchPendingRequests = async () => {

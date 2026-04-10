@@ -383,7 +383,7 @@ const SalaryForm: React.FC = () => {
         });
 
         if (res.ok) {
-          const advances: any[] = await res.json();
+          const advances: { status: string; repaymentDeductionMonth: string; amountRequested: string | number }[] = await res.json();
           // Filter for APPROVED and matching the Repayment Month
           const totalAdvanceDeduction = advances
             .filter((adv) => adv.status === "APPROVED" && adv.repaymentDeductionMonth === currentSelectedMonth)
