@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loading from "../../components/Loading/Loading";
 
@@ -54,7 +54,7 @@ const EmpSalaryAdvance = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (!formData.amountRequested || !formData.repaymentDeductionMonth) {
       toast.warning("Please fill all required fields.");
