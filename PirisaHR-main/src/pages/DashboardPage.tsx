@@ -10,9 +10,12 @@ import CrossAppNavButton from "../components/layout/CrossAppNavButton";
 
 const DashboardPage = () => (
   <div className="flex flex-col gap-5 w-full">
-    {/* Page Header matching Ginum Style */}
-    <div className="flex justify-between items-center mb-2">
-      <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
+    {/* Page Header matching Ginum Style - Added z-index and forced visibility */}
+    <div className="flex justify-between items-center mb-6 bg-white p-4 rounded-xl shadow-sm border border-gray-100 z-10 relative">
+      <div className="flex items-center gap-3">
+        <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
+        <span className="bg-sky-100 text-sky-600 text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Overview</span>
+      </div>
       <CrossAppNavButton />
     </div>
 
