@@ -138,11 +138,6 @@ const TabHeader: React.FC<TabHeaderProps> = ({ pathname }) => {
           </div>
         )}
       </div>
-
-      {/* Return to Dashboard Button */}
-      <div className="flex-shrink-0 ml-4">
-        <CrossAppNavButton />
-      </div>
     </div>
   );
 };

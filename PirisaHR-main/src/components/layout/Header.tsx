@@ -10,6 +10,7 @@ import {
 import { TranslatableText } from "../languages/TranslatableText";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "../../context/LanguageProvider";
+import CrossAppNavButton from "./CrossAppNavButton";
 
 interface HeaderProps {
   toggleSidebar: () => void;
@@ -532,6 +533,10 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
           placeholder={language === "en" ? "Search" : "Search"}
           className="bg-gray-100 hidden sm:block w-full max-w-md px-4 py-2 rounded border focus:outline-none focus:ring focus:border-blue-300"
         />
+
+        <div className="ml-4 flex-shrink-0">
+          <CrossAppNavButton />
+        </div>
       </div>
 
       {/* Right Section */}
