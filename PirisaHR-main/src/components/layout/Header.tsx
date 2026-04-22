@@ -537,11 +537,6 @@ const Header: React.FC<HeaderProps> = ({ toggleSidebar }) => {
 
       {/* Right Section */}
       <div className="flex items-center space-x-3 sm:space-x-6 flex-shrink-0">
-        {/* Navigation to Main Dashboard */}
-        <div className="hidden md:block">
-          <CrossAppNavButton />
-        </div>
-
         {/* Language Dropdown */}
         <div className="relative" ref={dropdownRef}>
           <button
