@@ -9,6 +9,7 @@ import {
   FaBuilding,
 } from "react-icons/fa";
 import { TranslatableText } from "../languages/TranslatableText";
+import CrossAppNavButton from "./CrossAppNavButton";
 
 interface TabHeaderProps {
   pathname: string;
@@ -136,6 +137,11 @@ const TabHeader: React.FC<TabHeaderProps> = ({ pathname }) => {
             </span>
           </div>
         )}
+      </div>
+
+      {/* Return to Dashboard Button - Placed here to be visible immediately on entry */}
+      <div className="flex-shrink-0 ml-4">
+        <CrossAppNavButton />
       </div>
     </div>
   );

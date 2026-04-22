@@ -10,12 +10,6 @@ import CrossAppNavButton from "../components/layout/CrossAppNavButton";
 
 const DashboardPage = () => (
   <div className="flex flex-col gap-5 w-full">
-    {/* Page Header matching Ginum Style */}
-    <div className="flex justify-between items-center mb-2">
-      <h1 className="text-2xl font-bold text-gray-800">Dashboard</h1>
-      <CrossAppNavButton />
-    </div>
-
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
       <div className="lg:col-span-4">
         <RealtimeInsightCard />
