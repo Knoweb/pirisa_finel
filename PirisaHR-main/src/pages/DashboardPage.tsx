@@ -6,7 +6,6 @@ import DepartmentStats from "../components/dashboard/DepartmentStats";
 import EmployeeGrowthChart from "../components/dashboard/EmployeeGrowthChart";
 import EmployeeGenderCard from "../components/dashboard/GenderChart";
 import LeaveRequestTable from "../components/dashboard/LeaveRequestTable";
-import CrossAppNavButton from "../components/layout/CrossAppNavButton";
 
 const DashboardPage = () => (
   <div className="flex flex-col gap-5 w-full">
