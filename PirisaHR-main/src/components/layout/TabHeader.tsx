@@ -9,7 +9,6 @@ import {
   FaBuilding,
 } from "react-icons/fa";
 import { TranslatableText } from "../languages/TranslatableText";
-import CrossAppNavButton from "./CrossAppNavButton";
 
 interface TabHeaderProps {
   pathname: string;
