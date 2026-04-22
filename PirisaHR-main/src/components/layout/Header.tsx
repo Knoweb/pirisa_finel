@@ -10,7 +10,6 @@ import {
 import { TranslatableText } from "../languages/TranslatableText";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "../../context/LanguageProvider";
-import CrossAppNavButton from "./CrossAppNavButton";
 
 interface HeaderProps {
   toggleSidebar: () => void;
