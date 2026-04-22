@@ -9,6 +9,7 @@ import {
   FaBuilding,
 } from "react-icons/fa";
 import { TranslatableText } from "../languages/TranslatableText";
+import CrossAppNavButton from "./CrossAppNavButton";
 
 interface TabHeaderProps {
   pathname: string;
@@ -120,21 +121,28 @@ const TabHeader: React.FC<TabHeaderProps> = ({ pathname }) => {
   };
 
   return (
-    <div className="flex items-center p-4 mt-20">
-      <div className="text-sky-500 flex items-center font-bold">
-        {getTabIcon(activeTab)}
-        <span className="font-semibold text-lg">
-          <TranslatableText text={getTabLabel(activeTab)} />
-        </span>
-      </div>
-      {activeSubTab && (
-        <div className="ml-4 flex items-center text-gray-600">
-          <span className="text-lg">/</span>
-          <span className="ml-2">
-            <TranslatableText text={getSubTabLabel(activeTab, activeSubTab)} />
+    <div className="flex items-center justify-between p-4 mt-20">
+      <div className="flex items-center">
+        <div className="text-sky-500 gap-2 flex items-center font-bold">
+          {getTabIcon(activeTab)}
+          <span className="font-semibold text-lg">
+            <TranslatableText text={getTabLabel(activeTab)} />
           </span>
         </div>
-      )}
+        {activeSubTab && (
+          <div className="ml-4 flex items-center text-gray-600">
+            <span className="text-lg">/</span>
+            <span className="ml-2">
+              <TranslatableText text={getSubTabLabel(activeTab, activeSubTab)} />
+            </span>
+          </div>
+        )}
+      </div>
+
+      {/* Return to Dashboard Button */}
+      <div className="hidden sm:block">
+        <CrossAppNavButton />
+      </div>
     </div>
   );
 };
