@@ -6,12 +6,27 @@ import { Check, X } from "lucide-react";
 interface AdvanceRequest {
   id: number;
   employeeId: string;
+  employeeName?: string;
   requestDate: string;
   amountRequested: number;
   approvedBy: string | null;
   repaymentDeductionMonth: string;
   status: "PENDING" | "APPROVED" | "REJECTED";
   remarks: string;
+}
+
+interface EmployeeOption {
+  id: number;
+  firstName?: string;
+  lastName?: string;
+  first_name?: string;
+  last_name?: string;
+}
+
+interface EmployeeListResponse {
+  resultCode: number;
+  resultDesc: string;
+  EmployeeList?: EmployeeOption[];
 }
 
 const AdvanceRequests = () => {
@@ -29,7 +44,35 @@ const AdvanceRequests = () => {
     try {
       setLoading(true);
       const cmpId = localStorage.getItem("cmpnyId");
-      
+
+      let employeeNameMap = new Map<string, string>();
+
+      if (cmpId) {
+        try {
+          const employeeResponse = await fetch(`/api/employee/EmpDetailsList/${cmpId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (employeeResponse.ok) {
+            const employeeData: EmployeeListResponse = await employeeResponse.json();
+            if (employeeData.resultCode === 100 && Array.isArray(employeeData.EmployeeList)) {
+              employeeNameMap = new Map(
+                employeeData.EmployeeList.map((employee) => {
+                  const firstName = employee.firstName ?? employee.first_name ?? "";
+                  const lastName = employee.lastName ?? employee.last_name ?? "";
+                  return [String(employee.id), `${firstName} ${lastName}`.trim()];
+                })
+              );
+            }
+          }
+        } catch (employeeErr) {
+          console.error("Error fetching employee names:", employeeErr);
+        }
+      }
+
       // Fetch all requests
       let url = "/api/advances?status=ALL";
       if (cmpId) {
@@ -43,7 +86,13 @@ const AdvanceRequests = () => {
       });
       if (res.ok) {
         const data = await res.json();
-        setRequests(data);
+        const enrichedRequests = Array.isArray(data)
+          ? data.map((request: AdvanceRequest) => ({
+              ...request,
+              employeeName: employeeNameMap.get(String(request.employeeId)) || `Employee ${request.employeeId}`,
+            }))
+          : [];
+        setRequests(enrichedRequests);
       } else {
         toast.error("Failed to fetch pending requests.");
       }
@@ -129,7 +178,7 @@ const AdvanceRequests = () => {
             <table className="w-full text-left border-collapse">
               <thead>
                 <tr className="bg-gray-50 border-b border-gray-100 text-sm font-medium text-gray-500">
-                  <th className="p-4">Employee ID</th>
+                    <th className="p-4">Employee</th>
                   <th className="p-4">Request Date</th>
                   <th className="p-4">Amount (LKR)</th>
                   <th className="p-4">Deduction Month</th>
@@ -148,7 +197,10 @@ const AdvanceRequests = () => {
                 ) : (
                   filteredRequests.map((req) => (
                     <tr key={req.id} className="hover:bg-gray-50 transition-colors">
-                      <td className="p-4 font-medium text-gray-800">{req.employeeId}</td>
+                      <td className="p-4">
+                        <div className="font-medium text-gray-800">{req.employeeName || `Employee ${req.employeeId}`}</div>
+                        <div className="text-xs text-gray-500">ID: {req.employeeId}</div>
+                      </td>
                       <td className="p-4 text-sm text-gray-700">
                         {new Date(req.requestDate).toLocaleDateString()}
                       </td>
