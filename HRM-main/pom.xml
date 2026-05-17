@@ -20,6 +20,8 @@
 <properties>
 	<maven.compiler.target>11</maven.compiler.target>
 	<maven.compiler.source>11</maven.compiler.source>
+	<!-- Spring Cloud BOM version compatible with Spring Boot 2.7.x -->
+	<spring-cloud.version>2021.0.6</spring-cloud.version>
 </properties>
 
 <dependencies>
@@ -56,6 +58,11 @@
 		<artifactId>spring-boot-starter-tomcat</artifactId>
 		<scope>provided</scope>
 	</dependency>
+	
+	<dependency>
+    	<groupId>org.springframework.cloud</groupId>
+    	<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-test</artifactId>
@@ -108,6 +115,18 @@
 	</dependency>
 
 </dependencies>
+
+<dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-dependencies</artifactId>
+			<version>${spring-cloud.version}</version>
+			<type>pom</type>
+			<scope>import</scope>
+		</dependency>
+	</dependencies>
+</dependencyManagement>
 
 <build>
 	<plugins>

@@ -6,12 +6,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @SpringBootApplication
 @EnableScheduling
 @EnableConfigurationProperties(HikvisionSyncProperties.class)
+@EnableDiscoveryClient
 public class HrmApplication {
 
 	public static void main(String[] args) {
